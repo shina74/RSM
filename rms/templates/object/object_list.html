@@ -1,0 +1,19 @@
+{% extends "object/default.html" %}
+{% block title %}Посты из категории {{title}}{% endblock %}
+
+{% block content %}
+<main>
+    <section>
+	<div class="container">
+	    <h1>Посты из категории {{title}}</h1>
+	</div>
+    </section>
+	<div>
+		{% for post in posts%}
+		<div>
+				<h3>{{post}}</h3>
+		</div>
+		{% endfor %}
+    </div>
+</main>
+{% endblock %}

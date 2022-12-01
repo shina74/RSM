@@ -1,8 +1,32 @@
 from rest_framework import generics, permissions
+
+from django.views.generic import ListView
+from django.contrib.auth.models import User
+
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
-from django.contrib.auth.models import User
-from .models import Object, Picture
+from .models import Object, Picture, Category
+
+
+class CategoryListView(ListView):
+    model = Category
+    context_object_name = 'categories'
+    template_name = 'object/category_list.html'
+
+
+class PostByCategoryView(ListView):
+    context_object_name = 'posts'
+    template_name = 'object/post_list.html'
+
+    def get_queryset(self):
+        self.category = Category.objects.get(slug=self.kwargs['slug'])
+        queryset = Object.objects.filter(category=self.category)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = self.category
+        return context
 
 
 class UserList(generics.ListAPIView):

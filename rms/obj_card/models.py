@@ -1,4 +1,30 @@
 from django.db import models
+from django.urls import reverse
+
+from mptt.models import MPTTModel, TreeForeignKey
+
+
+class Category(MPTTModel):
+    name = models.CharField(max_length=256)
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='children',
+        on_delete=models.CASCADE, db_index=True, verbose_name='Родительская категория')
+    id_old = models.CharField(max_length=128, blank=True)
+    id_parent_old = models.CharField(max_length=128, blank=True)
+    slug = models.SlugField()
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    class Meta:
+        unique_together = [['parent', 'slug']]
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+    def get_absolute_url(self):
+        return reverse('category', args=[str(self.slug)])
+
+    def __str__(self):
+        return self.name
 
 
 class Object(models.Model):
@@ -6,12 +32,17 @@ class Object(models.Model):
     name = models.CharField(max_length=100, blank=False, default='')
     description = models.TextField(blank=True, default='')
     owner = models.ForeignKey('auth.User', related_name='object', on_delete=models.CASCADE)
+    category = TreeForeignKey(Category, blank=True, null=True, on_delete=models.PROTECT, 
+        related_name='object', verbose_name='Категория')
 
     class Meta:
         ordering = ['name']
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Picture(models.Model):
     name = models.CharField(max_length=100, blank=True, default='pic')
     image = models.ImageField(upload_to='media')
-    obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE)
+    obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE, blank=True, null=True)
