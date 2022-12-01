@@ -1,8 +1,9 @@
 from rest_framework import generics, permissions
 from . import serializers
-from .permisisions import IsOwnerOrReadOnly
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import Object, Picture
+from .forms import ObjForm, PicForm
 
 
 class UserList(generics.ListAPIView):
@@ -44,3 +45,32 @@ class PicList(generics.CreateAPIView):
 class PicDetail(generics.RetrieveAPIView):
     queryset = Picture.objects.all()
     serializer_class = serializers.PictureSerializer
+
+
+"""
+def obj_add(request):
+    if request.method == "POST":
+        form = ObjForm(request.POST)
+        if form.is_valid():
+            Obj = form.save(commit=False)
+            Obj.owner = request.user
+            Obj.save()
+            return redirect('obj_card/ok')
+    else:
+        form = ObjForm()
+    return render(request, 'obj_card/obj_add.html', {'form': form})
+"""
+def obj_add(request):
+    if request.method == "POST":
+        form = PicForm(request.POST, request.FILES)
+        if form.is_valid():
+            Obj = form.save()
+            Obj.save()
+            return redirect('obj_card/ok')
+    else:
+        form = PicForm()
+    return render(request, 'obj_card/obj_add.html', {'form': form})
+
+
+def ok(request):
+    return render(request, 'obj_card/ok.html')

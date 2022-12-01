@@ -8,6 +8,8 @@ urlpatterns = [
     path('obj/', views.ObjList.as_view()),
     path('obj/<int:id>/', views.ObjDetail.as_view()),
     path('pic/', views.PicList.as_view()),
+    path('obj_add', views.obj_add, name='obj_add'),
+    path('obj_card/ok', views.ok),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
