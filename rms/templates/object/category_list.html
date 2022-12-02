@@ -10,6 +10,7 @@
 	<ul>
 	{% recursetree categories %}
 	    <li>
+		<!-- <a href="{% url 'category' node.id %}">{{node.name}}</a>{{node.name}}</a> -->
 		<a href="{{node.get_absolute_url}}">{{node.name}}</a>
 		{% if not node.is_leaf_node %}
                 <ul class="children">

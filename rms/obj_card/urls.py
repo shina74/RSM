@@ -10,7 +10,12 @@ urlpatterns = [
     path('obj/<int:id>/', views.ObjDetail.as_view()),
     path('pic/', views.PicList.as_view()),
     path('cat/', views.CategoryListView.as_view(), name='category-list'),
-    path('<str:slug>/', views.PostByCategoryView.as_view(), name='category'),
+    path('cat/<int:pk>/', views.PostByCategoryView.as_view(), name='category'),
+
+    path('', views.index),
+    path('load_cat/', views.load_cat),   # удалить
+    path('set_parent/', views.set_parent),   # удалить
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
+ 
