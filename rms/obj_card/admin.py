@@ -11,4 +11,4 @@ from .models import Object, Picture, Category
 
 admin.site.register(Object)
 admin.site.register(Picture)
-admin.site.register(Category) # , CategoryAdmin)
+admin.site.register(Category, DjangoMpttAdmin) # , CategoryAdmin)

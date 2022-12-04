@@ -12,7 +12,7 @@ from .models import Object, Picture, Category
 
 
 '''
-Дальше идут классы для загрузки БД.
+Дальше идёт код для загрузки БД.
 После заливки удалить 
 '''
 
@@ -33,13 +33,18 @@ def set_parent(request):   # заполняем parent
 def load_cat(request):   # выгружаем из json файла и записываем в базу
     # print(os.getcwd ())
     loads = ''
-    with open('category-lv.json', 'r', encoding='utf-8') as f:
+    with open('category-lv-new.json', 'r', encoding='utf-8') as f:
         loads = f.read()
-    cat_dict = json.loads(loads)   # получаем словарь {"имя категории": ["id категори, id родителя"]}
+    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
 
     for cat in cat_dict:
-        print(cat, '/' ,cat_dict[cat][0], '/', cat_dict[cat][1])
-        Category.objects.create(name=cat, id_old=cat_dict[cat][0], id_parent_old=cat_dict[cat][1])
+        print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
+        Category.objects.create(
+            name=cat_dict[cat][0], 
+            id_old=cat, 
+            id_parent_old=cat_dict[cat][1])
+        
+
     data = Category.objects.all()
 
     return render(request, "object/index.html", {'data': data})
@@ -56,26 +61,20 @@ def index(request, **kwargs):
 
 class CategoryListView(ListView):
     model = Category
-    context_object_name = 'categories'
     template_name = 'object/category_list.html'
 
 
-class PostByCategoryView(ListView):
-    context_object_name = 'posts'
-    template_name = 'object/object_list.html'
-
-    def get_queryset(self):
-        print('Принт:', self)
-        self.category = Category.objects.get(id=1)
-        queryset = Object.objects.filter(category=self.category)
-        return queryset
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = "object/category.html"
+    context_object_name = 'category'
 
     def get_context_data(self, **kwargs):
-        print('Принт:', self.request)
-        print('Принт2:', kwargs)
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Категория 309' # self.category
+        context['things'] = Object.objects.all()
         return context
+
+
 
 
 class UserList(generics.ListAPIView):

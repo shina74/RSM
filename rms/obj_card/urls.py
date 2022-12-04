@@ -9,8 +9,8 @@ urlpatterns = [
     path('obj/', views.ObjList.as_view()),
     path('obj/<int:id>/', views.ObjDetail.as_view()),
     path('pic/', views.PicList.as_view()),
-    path('cat/', views.CategoryListView.as_view(), name='category-list'),
-    path('cat/<int:pk>/', views.PostByCategoryView.as_view(), name='category'),
+    path('cat/', views.CategoryListView.as_view()),
+    path('cat/<int:pk>/', views.CategoryDetailView.as_view()),
 
     path('', views.index),
     path('load_cat/', views.load_cat),   # удалить

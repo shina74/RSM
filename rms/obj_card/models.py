@@ -1,4 +1,4 @@
-from slugify import slugify
+# from slugify import slugify
 from django.db import models
 from django.urls import reverse
 
@@ -6,35 +6,16 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=256, unique=False)
     parent = TreeForeignKey(
         'self', 
-        blank=True, 
-        null=True, 
-        related_name='children',
         on_delete=models.CASCADE, 
-        verbose_name='Родительская категория',
-        db_index=True,
+        null=True, 
+        blank=True, 
+        related_name='children'
         )
     id_old = models.CharField(max_length=128, blank=True)
     id_parent_old = models.CharField(max_length=128, blank=True)
-    # slug = models.SlugField()
-
-    class MPTTMeta:
-        order_insertion_by = ['name']
-
-    # class Meta:
-    #     unique_together = ['parent', 'slug']
-    #     verbose_name = 'Категория'
-    #     verbose_name_plural = 'Категории'
-
-    def get_absolute_url(self):
-        return reverse('category', args=[int(self.id)])  
-
-    # def save(self, *args, **kwargs):
-    #     if not self.slug:
-    #         self.slug = slugify(self.name).lower() + '-' + str(id)
-    #     super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
