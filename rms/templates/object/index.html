@@ -1,4 +1,3 @@
-
-    {% for val in data %}
-        {{val.id}} - {{val.name}} / {{val.id_old}} / {{val.id_parent_old}} / {{val.parent}} <br>
-    {% endfor%}
+{{data}}<br><br>
+<a href="{%url 'categories'%}">Список категорий</a>
+<p>Товары есть только в категории "шубы"</p>

@@ -11,69 +11,34 @@ from .permisisions import IsOwnerOrReadOnly
 from .models import Object, Picture, Category
 
 
-'''
-Дальше идёт код для загрузки БД.
-После заливки удалить 
-'''
+def index(request):
+    '''
+    Временная функция для главной
+    '''
+    data = 'Привет, мир.'
+    return render(request, 'object/index.html', {'data': data})
 
-def set_parent(request):   # заполняем parent
-    categoties = Category.objects.all()
-    for cat in categoties:
-        try:
-            id_parent = Category.objects.get(id_old=cat.id_parent_old)
-            cat.parent = id_parent
-            cat.save()
-            print(cat.id, cat.name, cat.id_old, cat.id_parent_old, )
-        except:
-            print('Нет объекта с id_old', cat.id_parent_old)
-    data = Category.objects.all()
-    return render(request, "object/index.html", {'data': data})
-
-
-def load_cat(request):   # выгружаем из json файла и записываем в базу
-    # print(os.getcwd ())
-    loads = ''
-    with open('category-lv-new.json', 'r', encoding='utf-8') as f:
-        loads = f.read()
-    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
-
-    for cat in cat_dict:
-        print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
-        Category.objects.create(
-            name=cat_dict[cat][0], 
-            id_old=cat, 
-            id_parent_old=cat_dict[cat][1])
-        
-
-    data = Category.objects.all()
-
-    return render(request, "object/index.html", {'data': data})
-
-
-def index(request, **kwargs):
-    data = Category.objects.all()
-    print(kwargs)
-    return render(request, "object/index.html", {"data": data})
-
-'''
-Конец блока классов для загрузки БД
-'''
 
 class CategoryListView(ListView):
+    '''
+    Строит дерево категорий
+    '''
     model = Category
     template_name = 'object/category_list.html'
 
 
 class CategoryDetailView(DetailView):
+    '''
+    Выводит вещи из выбранной категории
+    '''
     model = Category
     template_name = "object/category.html"
     context_object_name = 'category'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['things'] = Object.objects.all()
+        context['things'] = Object.objects.filter(category=self.kwargs['pk'])
         return context
-
 
 
 

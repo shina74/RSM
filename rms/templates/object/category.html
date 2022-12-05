@@ -1,16 +1,15 @@
 {% extends "object/default.html" %} 
-{% block title %}Посты из категории {{title}}{% endblock %}
+{% block title %}Вещи из категории {{category}}{% endblock %}
 
 {% block content %}
 <main>
     <section>
 	<div class="container">
-	    <h1>Посты из категории {{category}}</h1>
+	    <h1>Вещи из категории {{category}}</h1>
 	</div>
     
     </section>
 	<div>
-		{{things}}
 		{% for thing in things%}
 		<div>
 				{{thing}}<br>
