@@ -10,3 +10,4 @@ pytz==2022.6
 regex==2022.10.31
 sqlparse==0.4.3
 tzdata==2022.7
+Unidecode==0.4.21
