@@ -15,8 +15,9 @@ from pathlib import Path
 
 
 # Чтение файлов переменных окруженияPython
-env = environ.Env(DEBUG=(bool, False))
+env = environ.Env()
 environ.Env.read_env()
+# print(os.getcwd())
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,13 +28,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-5@!zmez$h7x9yz6_21@fkj*=0%dvf)^lkmha@jfqy*=+jsz0)l'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = env['HOST']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -127,10 +129,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'STATIC_URL'
-STATIC_ROOT = 'STATIC_ROOT'
-MEDIA_URL = 'MEDIA_URL'
-MEDIA_ROOT = 'MEDIA_ROOT'
+STATIC_URL = '/static/'
+# STATIC_ROOT = 'STATIC_ROOT'
+MEDIA_URL = env.str('MEDIA_URL', default='media/')
+
+# MEDIA_ROOT = 'MEDIA_ROOT'
 
 
 # Default primary key field type
