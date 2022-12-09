@@ -13,6 +13,8 @@ urlpatterns = [
     path('cat/<int:pk>/', views.CategoryDetailView.as_view()),
 
     path('', views.index),
+    path('load_cat/', views.load_cat),   # удалить
+    path('set_parent/', views.set_parent),   # удалить
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

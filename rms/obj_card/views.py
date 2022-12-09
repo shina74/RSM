@@ -11,6 +11,48 @@ from .permisisions import IsOwnerOrReadOnly
 from .models import Object, Picture, Category
 
 
+'''
+Дальше идёт код для загрузки БД.
+После заливки удалить 
+'''
+def set_parent(request):   # заполняем parent
+    categoties = Category.objects.all()
+    for cat in categoties:
+        try:
+            id_parent = Category.objects.get(id_old=cat.id_parent_old)
+            cat.parent = id_parent
+            cat.save()
+            print(cat.id, cat.name, cat.id_old, cat.id_parent_old, )
+        except:
+            print('Нет объекта с id_old', cat.id_parent_old)
+    data = Category.objects.all()
+    return render(request, "object/index.html", {'data': data})
+
+
+def load_cat(request):   # выгружаем из json файла и записываем в базу
+    # print(os.getcwd ())
+    loads = ''
+    with open('./category-lv-new.json', 'r', encoding='utf-8') as f:
+        loads = f.read()
+    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
+
+    for cat in cat_dict:
+        print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
+        Category.objects.create(
+            name=cat_dict[cat][0], 
+            id_old=cat, 
+            id_parent_old=cat_dict[cat][1]
+            )
+        
+
+    data = Category.objects.all()
+
+    return render(request, "object/index.html", {'data': data})
+
+'''
+Конец блока классов для загрузки БД
+'''
+
 def index(request):
     '''
     Временная функция для главной
