@@ -1,0 +1,14 @@
+<html>
+{% block content %}
+    <h3>Предмет</h3>
+    <div class="post">
+        <h4>Название:  {{ post.name }}</h4>
+        <p>Описание :  {{ post.description }}</p>
+        {% for i in pic %}
+    <div>
+        <p><img src="{{ i.image.url }}"></p>
+    </div>
+{% endfor %}
+    </div>
+{% endblock %}
+</html>
