@@ -12,5 +12,6 @@ urlpatterns = [
     #path('obj/<int:pk>/', views.pic_add, name='pic_add'),
     path('obj_add', views.obj_add, name='obj_add'),
     path('obj/<int:pk>/', views.obj_detail, name='obj_detail'),
+    path('obj/<int:pk>/delete', views.pic_del, name='delete'),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

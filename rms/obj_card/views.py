@@ -32,6 +32,14 @@ def obj_detail(request, pk):
     pic = Picture.objects.filter(obj=pk)
     return render(request, 'obj_card/obj_detail.html', {'post': post, 'pic': pic})
 
+
+def pic_del(request, pk):
+    pic = Picture.objects.get(id=pk)
+    pk = pic.obj.id
+    pic.delete()
+    return redirect('obj_detail', pk=pk)
+
+
 # class UserList(generics.ListAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = serializers.UserSerializer
