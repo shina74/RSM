@@ -17,7 +17,7 @@ from pathlib import Path
 # Чтение файлов переменных окруженияPython
 env = environ.Env()
 environ.Env.read_env()
-# print(os.getcwd())
+print(os.getcwd())
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,8 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
-# SECRET_KEY = 'django-insecure-5@!zmez$h7x9yz6_21@fkj*=0%dvf)^lkmha@jfqy*=+jsz0)l'
+# SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = 'django-insecure-5@!zmez$h7x9yz6_21@fkj*=0%dvf)^lkmha@jfqy*=+jsz0)l'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!

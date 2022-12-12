@@ -37,9 +37,13 @@ class Object(models.Model):
 
 
 class Picture(models.Model):
-    name = models.CharField(max_length=100, blank=True, default='pic')
+    name = models.CharField(max_length=100, blank=True, default='pic', null=True)
     image = models.ImageField(upload_to='media')
+<<<<<<< HEAD
     obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return f'{self.name}'
+=======
+    obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE, null=True)
+>>>>>>> a99e489e6242aef092b076497a754fbd8306d6a5
