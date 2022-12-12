@@ -14,15 +14,13 @@ import environ
 from pathlib import Path
 
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 # Чтение файлов переменных окруженияPython
 env = environ.Env()
 environ.Env.read_env()
 print(os.getcwd())
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -33,6 +31,7 @@ SECRET_KEY = 'django-insecure-5@!zmez$h7x9yz6_21@fkj*=0%dvf)^lkmha@jfqy*=+jsz0)l
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 DEBUG = env.bool('DEBUG', default=True)
 
 ALLOWED_HOSTS = []
@@ -97,11 +96,11 @@ WSGI_APPLICATION = 'rms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'rms_db',
-        'USER': 'rms2022',
-        'PASSWORD': 'kjghaHH8HYds56jH9',
-        'HOST': 'localhost',
-        'PORT': 3306,
+        'NAME': env.str('NAME_DB'),
+        'USER': env.str('USER_DB'),
+        'PASSWORD': env.str('PASSWORD_DB'),
+        'HOST': env.str('HOST_DB'),
+        'PORT': env.int('PORT_DB'),
     }
 }
 
@@ -140,10 +139,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = 'STATIC_ROOT'
-MEDIA_URL = env.str('MEDIA_URL', default='media/')
-
-# MEDIA_ROOT = 'MEDIA_ROOT'
+MEDIA_URL = '/media/'
+STATIC_ROOT = env.str('STATIC_ROOT')
+MEDIA_ROOT = env.str('MEDIA_ROOT')
 
 
 # Default primary key field type
