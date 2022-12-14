@@ -13,5 +13,5 @@ class Object(models.Model):
 
 class Picture(models.Model):
     name = models.CharField(max_length=100, blank=True, default='pic', null=True)
-    image = models.ImageField(upload_to='media')
+    image = models.ImageField(upload_to='%Y/%m/%d/')
     obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE, null=True)

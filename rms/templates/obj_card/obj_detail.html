@@ -6,7 +6,9 @@
         <p>Описание :  {{ post.description }}</p>
         {% for i in pic %}
     <div>
-        <p><img src="{{ i.image }}"></p>
+        <p>
+            <img src="{{ i.image.url }}">
+        </p>
         <p>{{ i.image }}</p>
         <p>{{ i.id }}</p>
         <a href="{% url  'delete' i.id %}">Удалить </a>
