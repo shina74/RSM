@@ -17,7 +17,6 @@ from pathlib import Path
 # Чтение файлов переменных окруженияPython
 env = environ.Env()
 environ.Env.read_env()
-# print(os.getcwd())
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -139,14 +139,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-# STATIC_ROOT = 'STATIC_ROOT'
-MEDIA_URL = env.str('MEDIA_URL', default='media/')
-
-# MEDIA_ROOT = 'MEDIA_ROOT'
-
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+

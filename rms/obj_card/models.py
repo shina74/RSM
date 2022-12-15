@@ -33,13 +33,13 @@ class Object(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return f'{self.name}'
+        return self.name
 
 
 class Picture(models.Model):
-    name = models.CharField(max_length=100, blank=True, default='pic')
-    image = models.ImageField(upload_to='media')
-    obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, default='pic', null=True)
+    image = models.ImageField(upload_to='%Y/%m/%d/')
+    obj = models.ForeignKey(Object, related_name='Picture', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return self.name

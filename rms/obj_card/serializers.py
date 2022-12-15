@@ -20,6 +20,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'object']
 
 
+class PictureSerializer(serializers.ModelSerializer):
+    obj=serializers.PrimaryKeyRelatedField(queryset=Object.objects.all())
+
+    class Meta:
+        model = Picture
+        fields = ['id', 'name', 'image', 'obj']
+
+
 """class PictureSerializer(serializers.ModelSerializer):
     object_name = serializers.ReadOnlyField(source='obj.name')
     owner = serializers.ReadOnlyField(source='obj.owner.username')
@@ -29,11 +37,3 @@ class UserSerializer(serializers.ModelSerializer):
         model = Picture
         fields = ['id', 'name', 'image', 'object_name', 'description', 'owner']
 """
-
-
-class PictureSerializer(serializers.ModelSerializer):
-    obj=serializers.PrimaryKeyRelatedField(queryset=Object.objects.all())
-
-    class Meta:
-        model = Picture
-        fields = ['id', 'name', 'image', 'obj']
