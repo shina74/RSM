@@ -97,13 +97,14 @@ WSGI_APPLICATION = 'rms.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'rms_db',
-        'USER': 'rms2022',
-        'PASSWORD': 'kjghaHH8HYds56jH9',
-        'HOST': 'localhost',
-        'PORT': 3306,
+        'NAME': env.str('NAME_DB'),
+        'USER': env.str('USER_DB'),
+        'PASSWORD': env.str('PASSWORD_DB'),
+        'HOST': env.str('HOST_DB'),
+        'PORT': env.int('PORT_DB'),
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

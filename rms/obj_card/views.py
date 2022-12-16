@@ -13,10 +13,8 @@ from .models import Object, Picture, Category
 from .forms import ObjForm #PicForm
 
 
-'''
-Дальше идёт код для загрузки БД.
-После заливки удалить 
-'''
+'''Дальше идёт код для загрузки БД. После заливки удалить'''
+
 def set_parent(request):   # заполняем parent
     categoties = Category.objects.all()
     for cat in categoties:
@@ -32,7 +30,7 @@ def set_parent(request):   # заполняем parent
 
 
 def load_cat(request):   # выгружаем из json файла и записываем в базу
-    # print(os.getcwd ())
+    print(os.getcwd ())
     loads = ''
     with open('./category-lv-new.json', 'r', encoding='utf-8') as f:
         loads = f.read()
@@ -51,30 +49,23 @@ def load_cat(request):   # выгружаем из json файла и запис
 
     return render(request, "object/index.html", {'data': data})
 
-'''
-Конец блока классов для загрузки БД
-'''
+'''Конец блока для загрузки БД'''
+
 
 def index(request):
-    '''
-    Временная функция для главной
-    '''
+    '''Временная функция для главной'''
     data = 'Привет, мир.'
     return render(request, 'object/index.html', {'data': data})
 
 
 class CategoryListView(ListView):
-    '''
-    Строит дерево категорий
-    '''
+    '''Строит дерево категорий'''
     model = Category
     template_name = 'object/category_list.html'
 
 
 class CategoryDetailView(DetailView):
-    '''
-    Выводит вещи из выбранной категории
-    '''
+    '''Выводит вещи из выбранной категории'''
     model = Category
     template_name = "object/category.html"
     context_object_name = 'category'
@@ -86,6 +77,7 @@ class CategoryDetailView(DetailView):
 
 
 def obj_add(request):
+    '''Добавить вещь'''
     if request.method == 'GET':
         form = ObjForm()
         return render(request, 'obj_card/obj_add.html', {'form': form})
@@ -106,12 +98,14 @@ def obj_add(request):
 
 
 def obj_detail(request, pk):
+    '''Посмотреть вещь'''
     post = get_object_or_404(Object, pk=pk)
     pic = Picture.objects.filter(obj=pk)
     return render(request, 'obj_card/obj_detail.html', {'post': post, 'pic': pic})
 
 
 def pic_del(request, pk):
+    '''Удалить фото'''
     pic = Picture.objects.get(id=pk)
     pk = pic.obj.id
     pic.delete()
