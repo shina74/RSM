@@ -1,7 +1,6 @@
 .idea/
 venv/
 **/media/*
-**/static/*
 **/__pycache__/
 **/migrations/*
 !obj_card/migrations/__init__.py
