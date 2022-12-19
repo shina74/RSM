@@ -2,19 +2,49 @@
 {% block title %}Вещи из категории {{category}}{% endblock %}
 
 {% block content %}
-<main>
-    <section>
-	<div class="container">
-	    <h1>Вещи из категории {{category}}</h1>
-	</div>
-    
-    </section>
-	<div>
-		{% for thing in things%}
-		<div>
-				{{thing}}<br>
-		</div>
-		{% endfor %}
+<table border="1">
+	<tr>
+		<td>
+			Название
+		</td>
+		<td>
+			Дата добавления
+		</td>
+		<td>
+			Категория
+		</td>
+		<td>
+			Фото
+		</td>
+
+	</tr>
+
+{% for thing in things %}
+	<tr>
+		<td>
+			<a href="{% url 'obj_detail' thing.id %}">{{thing.name}}</a><br>
+			<a href="">Изменить</a>
+			<a href="{% url 'obj_delete' thing.id %}">Удалить</a>
+		
+		</td>
+		<td>
+			{{thing.created|date:'d M Y'}}
+		</td>
+		<td>
+			{{thing.category__name}}
+		</td>
+		<td>
+			{% for photo in photos %}
+				{% if photo.obj == thing %}
+					<img src="{{ photo.image.url }}" width="70px">
+				{% endif %}
+			{% endfor %}
+		</td>
+
+	</tr>
+	
+	
+	{% endfor %}
     </div>
-</main>
+
 {% endblock %}

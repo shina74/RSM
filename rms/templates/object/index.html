@@ -1,3 +1,19 @@
+{% extends "object/default.html" %}
+
+{% block title %}
+  {{data}}
+{% endblock %}
+
+{% block content %}
+
+
 {{data}}<br><br>
 <a href="{%url 'categories'%}">Список категорий</a><br>
 <a href="{%url 'obj_add'%}">Добавить вещь</a>
+<p>Вещи добавлены только в категорию "Шубы"</p>
+<p>Для добавления вещи, нужно авторизоваться</p>
+<a href="http://rms2022.pythonanywhere.com/admin">Авторизиция</a>
+<p>Логин: admin</p>
+<p>Пароль: 1234</p>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "object/default.html" %} 
+{% block title %}
+    {{ post.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="post">
+        <p>Описание :  {{ obj.description }}</p>
+        <p>Категория :  {{ obj.category }}</p>
+        {% for i in pic %}
+            <div>
+                <p>
+                    <img src="{{ i.image.url }}">
+                </p>
+                <a href="{% url  'photo_delete' i.id %}">Удалить </a>
+            </div>
+        {% endfor %}
+        <a href="{% url 'obj_delete' obj.id %}">Удалить {{obj.name}}</a>
+    </div>
+{% endblock %}

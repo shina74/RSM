@@ -3,9 +3,11 @@ import os
 from rest_framework import generics, permissions
 
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.files.base import ContentFile
+from django.urls import reverse_lazy
 
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
@@ -54,7 +56,7 @@ def load_cat(request):   # выгружаем из json файла и запис
 
 def index(request):
     '''Временная функция для главной'''
-    data = 'Привет, мир.'
+    data = 'Сайт личных вещей'
     return render(request, 'object/index.html', {'data': data})
 
 
@@ -73,6 +75,8 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['things'] = Object.objects.filter(category=self.kwargs['pk'])
+        context['photos'] = Picture.objects.all()   # нужно прикрутить фильтр по юзеру, 
+                                                    #чтобы собирать только его фото, а не все из базы
         return context
 
 
@@ -80,13 +84,17 @@ def obj_add(request):
     '''Добавить вещь'''
     if request.method == 'GET':
         form = ObjForm()
-        return render(request, 'obj_card/obj_add.html', {'form': form})
+        return render(request, 'object/obj_add.html', {'form': form})
     elif request.method == 'POST':
         form = ObjForm(request.POST, request.FILES)
         if form.is_valid():
             obj = Object.objects.create(owner=request.user,
                                         name=form.cleaned_data['name'],
-                                        description=form.cleaned_data['dis'])
+                                        description=form.cleaned_data['dis'],
+                                        category=form.cleaned_data['category'],
+                                        )
+            print(form.cleaned_data['category'])
+                
             for f in request.FILES.getlist('photos'):
                 data = f.read()
                 photo = Picture(obj=obj)
@@ -94,14 +102,14 @@ def obj_add(request):
                 photo.save()
             return redirect('obj_detail', pk=obj.pk)
         else:
-            return render(request, 'obj_card/obj_add.html', {'form': form})
+            return render(request, 'object/obj_add.html', {'form': form})
 
 
 def obj_detail(request, pk):
     '''Посмотреть вещь'''
-    post = get_object_or_404(Object, pk=pk)
+    obj = get_object_or_404(Object, pk=pk)
     pic = Picture.objects.filter(obj=pk)
-    return render(request, 'obj_card/obj_detail.html', {'post': post, 'pic': pic})
+    return render(request, 'object/obj_detail.html', {'obj': obj, 'pic': pic})
 
 
 def pic_del(request, pk):
@@ -110,5 +118,11 @@ def pic_del(request, pk):
     pk = pic.obj.id
     pic.delete()
     return redirect('obj_detail', pk=pk)
+
+
+class ObjDeleteView(DeleteView):
+    model = Object
+    template_name = 'object/obj_delete.html'
+    success_url = reverse_lazy('home')
 
 

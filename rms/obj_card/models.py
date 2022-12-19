@@ -20,6 +20,10 @@ class Category(MPTTModel):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
 
 class Object(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -31,6 +35,9 @@ class Object(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name = 'Вещь'
+        verbose_name_plural = 'Вещи'
+
 
     def __str__(self):
         return self.name
@@ -43,3 +50,7 @@ class Picture(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = 'Фотография'
+        verbose_name_plural = 'Фотографии'
