@@ -1,6 +1,8 @@
 .idea/
 venv/
 **/media/*
+**/static/*
+!rms/static/vendor/*
 **/__pycache__/
 **/migrations/*
 !obj_card/migrations/__init__.py

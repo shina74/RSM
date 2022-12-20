@@ -19,6 +19,8 @@ urlpatterns = [
     path('obj_add', views.obj_add, name='obj_add'),
     path('obj/<int:pk>/', views.obj_detail, name='obj_detail'),
     path('photo/<int:pk>/delete', views.pic_del, name='photo_delete'),
-    path('obj/<int:pk>/delete', views.ObjDeleteView.as_view(), name='obj_delete')
+    path('obj/<int:pk>/delete', views.ObjDeleteView.as_view(), name='obj_delete'),
+    path('obj_list/', views.ObjListView.as_view(), name='obl_list'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns = format_suffix_patterns(urlpatterns)

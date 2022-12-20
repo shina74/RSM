@@ -2,36 +2,56 @@
 {% block title %}Вещи из категории {{category}}{% endblock %}
 
 {% block content %}
-<table border="1">
-	<tr>
-		<td>
-			Название
-		</td>
-		<td>
-			Дата добавления
-		</td>
-		<td>
-			Категория
-		</td>
-		<td>
-			Фото
-		</td>
+<style>
+	table{
+	  margin: 50px 0px;
+	  text-align: left;
+	  border: 1px solid rgb(0, 0, 0);
+	  width: 100%;
+	  border-collapse: collapse;
+	}
+	td,th{
+    border: 1px solid rgb(0, 0, 0);
+    padding: 5px;
+  }
 
+  </style>
+<table>
+	<tr>
+		<th>
+			Название
+		</th>
+		<th>
+			Дата добавления
+		</th>
+		<th>
+			Категория
+		</th>
+		<th>
+			Пользователь
+		</th>
+		<th>
+			Фото
+		</th>
 	</tr>
 
 {% for thing in things %}
 	<tr>
 		<td>
-			<a href="{% url 'obj_detail' thing.id %}">{{thing.name}}</a><br>
-			<a href="">Изменить</a>
-			<a href="{% url 'obj_delete' thing.id %}">Удалить</a>
-		
+			<p>
+				<a href="{% url 'obj_detail' thing.id %}"><b>{{thing.name}}</b></a> / 
+				<a href="">Изменить</a> / 
+				<a href="{% url 'obj_delete' thing.id %}">Удалить</a>
+			</p>
 		</td>
 		<td>
 			{{thing.created|date:'d M Y'}}
 		</td>
 		<td>
-			{{thing.category__name}}
+			{{thing.category}}
+		</td>
+		<td>
+			{{thing.owner}}
 		</td>
 		<td>
 			{% for photo in photos %}
@@ -42,9 +62,7 @@
 		</td>
 
 	</tr>
-	
-	
 	{% endfor %}
-    </div>
+</table>
 
 {% endblock %}

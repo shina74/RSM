@@ -121,8 +121,24 @@ def pic_del(request, pk):
 
 
 class ObjDeleteView(DeleteView):
+    '''Удалить вещь'''
     model = Object
     template_name = 'object/obj_delete.html'
     success_url = reverse_lazy('home')
 
 
+class ObjListView(ListView):
+    '''Список веще пользователя'''
+    model = Object
+    template_name = 'object/obj_list.html'
+
+    def get_queryset(self):
+        obj = Object.objects.filter(owner=self.request.user)
+        self.cat = Category.objects.filter(object__in=obj).distinct().get_ancestors(include_self=True)   # убираем 
+                                                                        # дубли и добавляем всех родителей до корня
+        return Object.objects.filter(owner=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cat_user'] = self.cat
+        return context
