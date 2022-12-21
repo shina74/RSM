@@ -6,9 +6,12 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 from .models import Object, Picture, Category
 
 
-# class CategoryAdmin(DjangoMpttAdmin):
-#     prepopulated_fields = {"slug": ("name",)}
+class PictureInline(admin.StackedInline):
+    model = Picture
 
-admin.site.register(Object)
+class ObjectAdmin(admin.ModelAdmin):
+    inlines = [PictureInline]
+
+admin.site.register(Object, ObjectAdmin)
 admin.site.register(Picture)
-admin.site.register(Category, DjangoMpttAdmin) # , CategoryAdmin)
+admin.site.register(Category, DjangoMpttAdmin)
