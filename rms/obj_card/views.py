@@ -75,8 +75,7 @@ class CategoryDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['things'] = Object.objects.filter(category=self.kwargs['pk'])
-        context['photos'] = Picture.objects.all()   # нужно прикрутить фильтр по юзеру, 
-                                                    #чтобы собирать только его фото, а не все из базы
+        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)
         return context
 
 
@@ -128,17 +127,14 @@ class ObjDeleteView(DeleteView):
 
 
 class ObjListView(ListView):
-    '''Список веще пользователя'''
+    '''Список вещей пользователя'''
     model = Object
     template_name = 'object/obj_list.html'
 
-    def get_queryset(self):
-        obj = Object.objects.filter(owner=self.request.user)
-        self.cat = Category.objects.filter(object__in=obj).distinct().get_ancestors(include_self=True)   # убираем 
-                                                                        # дубли и добавляем всех родителей до корня
-        return Object.objects.filter(owner=self.request.user)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['cat_user'] = self.cat
+        obj_user = Object.objects.filter(owner=self.request.user)
+        context['things'] = Object.objects.filter(owner=self.request.user)
+        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)
+        context['cat_user'] = Category.objects.filter(object__in=obj_user).distinct().get_ancestors(include_self=True)
         return context

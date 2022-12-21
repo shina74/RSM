@@ -4,19 +4,42 @@
 {% endblock %}
 
 {% block content %}
-    <div class="post">
+<style>
+	table{
+	  margin: 50px 0px;
+	  text-align: left;
+	  border: 1px solid rgb(0, 0, 0);
+	  width: 100%;
+	  border-collapse: collapse;
+	}
+	td,th{
+    border: 1px solid rgb(0, 0, 0);
+    padding: 5px;
+    vertical-align: top;
+  }
+
+</style>
+    <table>
+        <tr>
+            <td>
         <p>Название: {{ obj.name }}</p>
         <p>Описание:  {{ obj.description }}</p>
         <p>Категория:  {{ obj.category }}</p>
-        <p><a href="{% url 'obj_delete' obj.id %}">Удалить {{obj.name}}</a></p>
+        <p>
+            <a href="">Редактировать</a> / 
+            <a href="">Добавить фото</a> / 
+            <a href="{% url 'obj_delete' obj.id %}">Удалить</a>
+        </p>
+            </td>
+            <td>
+
         {% for i in pic %}
             <div>
-                <p>
-                    <img src="{{ i.image.url }}">
-                </p>
-                <a href="{% url  'photo_delete' i.id %}">Удалить </a>
+                <img src="{{ i.image.url }}">
+                <a href="{% url  'photo_delete' i.id %}">Удалить фото</a>
             </div>
         {% endfor %}
-        
-    </div>
+            </td>
+        </tr>
+    </table>
 {% endblock %}
