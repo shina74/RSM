@@ -1,9 +1,12 @@
 {% extends "object/default.html" %} 
+{% load mptt_tags %}
+
 {% block title %}
     {{ post.name }}
 {% endblock %}
 
 {% block content %}
+
 <style>
 	table{
 	  margin: 50px 0px;
@@ -19,27 +22,36 @@
   }
 
 </style>
-    <table>
-        <tr>
-            <td>
-        <p>Название: {{ obj.name }}</p>
-        <p>Описание:  {{ obj.description }}</p>
-        <p>Категория:  {{ obj.category }}</p>
-        <p>
-            <a href="">Редактировать</a> / 
-            <a href="">Добавить фото</a> / 
-            <a href="{% url 'obj_delete' obj.id %}">Удалить</a>
-        </p>
-            </td>
-            <td>
+
+{% recursetree obj_path %}
+    <a href="{% url 'category_obj' node.id %}">{{node.name}}</a>
+    {% if not node.is_leaf_node %}
+        / {{ children }}
+    {% endif %}
+{% endrecursetree %}
+<br>
+<input type="button" onclick="history.back();" value="Назад"/>
+<table>
+    <tr>
+        <td>
+            <p>Название: {{ obj.name }}</p>
+            <p>Описание:  {{ obj.description }}</p>
+            <p>Категория:  {{ obj.category }}</p>
+            <p>
+                <a href="">Редактировать</a> / 
+                <a href="">Добавить фото</a> / 
+                <a href="{% url 'obj_delete' obj.id %}">Удалить</a>
+            </p>
+        </td>
+        <td>
 
         {% for i in pic %}
             <div>
-                <img src="{{ i.image.url }}">
+                <img src="{{ i.image.url }}" width="300px">
                 <a href="{% url  'photo_delete' i.id %}">Удалить фото</a>
             </div>
         {% endfor %}
-            </td>
-        </tr>
-    </table>
+        </td>
+    </tr>
+</table>
 {% endblock %}

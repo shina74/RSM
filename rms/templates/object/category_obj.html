@@ -4,6 +4,9 @@
 {% block title %}Список моих вещей{% endblock %}
 
 {% block content %}
+
+<p>Здесь выводятся товары из выбранной категории и из всех вложенных в нее</p>
+
 <style>
 	table{
 	  margin: 0px 0px;
@@ -60,7 +63,7 @@
 						</th>
 					</tr>
 				
-				{% for thing in object_list %}
+				{% for thing in things %}
 					<tr>
 						<td>
 							<p>

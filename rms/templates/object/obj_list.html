@@ -4,6 +4,9 @@
 {% block title %}Список моих вещей{% endblock %}
 
 {% block content %}
+
+<p>Здесь выводятся все вещи из базы (нет привязки к категориям).</p>
+
 <style>
 	table{
 	  margin: 0px 0px;
@@ -27,7 +30,8 @@
 				<ul>
 				{% recursetree cat_user %}
 				<li>
-					<a href="{{node.id}}">{{node.name}}</a>
+					
+					<a href="{% url 'category_obj' node.id %}">{{node.name}}</a>
 					{% if not node.is_leaf_node %}
 						<ul class="children">
 							{{ children }}

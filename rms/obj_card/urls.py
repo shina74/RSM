@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('', views.index, name='home'),
     path('cat/', views.CategoryListView.as_view(), name='categories'),
-    path('cat/<int:pk>/', views.CategoryDetailView.as_view()),
+    path('cat/<int:pk>/', views.CategoryDetailView.as_view(), name='category_obj'),
     
     path('load_cat/', views.load_cat),   # удалить
     path('set_parent/', views.set_parent),   # удалить
