@@ -32,24 +32,35 @@
              <span class="sr-only">(current)</span>
            </a>
          </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'obj_add' %}">Добавить вещь</a>
-                    </li>
-                    <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'obj_add' %}">Добавить вещь</a>
+                        </li>
+                    {% endif %}
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{% url 'obl_list' %}">Список моих вещей</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'categories' %}">Список всех категорий</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="">Не нажимать</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Вход / регистрация</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/">Admin</a>
                     </li>
+                    <li class="nav-item">
+                        {% if request.user.is_authenticated %}
+                            <a class="nav-link" href="/">Личный кабинет ({{ request.user.username }})</a>
+                        {% else %}
+                            <a class="nav-link" href="{% url 'account_login' %}">Вход / регистрация</a>
+                        {% endif %}
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_logout' %}">Выход</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

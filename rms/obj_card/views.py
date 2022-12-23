@@ -2,9 +2,11 @@ import json
 import os
 from rest_framework import generics, permissions
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.files.base import ContentFile
 from django.urls import reverse_lazy
@@ -15,49 +17,25 @@ from .models import Object, Picture, Category
 from .forms import ObjForm #PicForm
 
 
-'''Дальше идёт код для загрузки БД. После заливки удалить'''
 
-def set_parent(request):   # заполняем parent
-    categoties = Category.objects.all()
-    for cat in categoties:
-        try:
-            id_parent = Category.objects.get(id_old=cat.id_parent_old)
-            cat.parent = id_parent
-            cat.save()
-            print(cat.id, cat.name, cat.id_old, cat.id_parent_old, )
-        except:
-            print('Нет объекта с id_old', cat.id_parent_old)
-    data = Category.objects.all()
-    return render(request, "object/index.html", {'data': data})
+class AccountIndex(LoginRequiredMixin, TemplateView):
+    '''Личный кабинет'''
+    template_name = 'object/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['count_obj'] = Object.objects.filter(owner=self.request.user).count()
+        return context
 
 
-def load_cat(request):   # выгружаем из json файла и записываем в базу
-    print(os.getcwd ())
-    loads = ''
-    with open('./category-lv-new.json', 'r', encoding='utf-8') as f:
-        loads = f.read()
-    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
-
-    for cat in cat_dict:
-        print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
-        Category.objects.create(
-            name=cat_dict[cat][0], 
-            id_old=cat, 
-            id_parent_old=cat_dict[cat][1]
-            )
-        
-
-    data = Category.objects.all()
-
-    return render(request, "object/index.html", {'data': data})
-
-'''Конец блока для загрузки БД'''
-
-
+@login_required
 def index(request):
     '''Временная функция для главной'''
-    data = 'Сайт личных вещей'
-    return render(request, 'object/index.html', {'data': data})
+    data = 'Сайт'
+    return render(request, 'object/index.html', {
+        'data': data,
+        'count_obj': Object.objects.filter(owner=request.user).count(),
+        })
 
 
 class CategoryListView(ListView):
@@ -81,6 +59,7 @@ class CategoryDetailView(DetailView):
         return context
 
 
+@login_required
 def obj_add(request):
     '''Добавить вещь'''
     if request.method == 'GET':

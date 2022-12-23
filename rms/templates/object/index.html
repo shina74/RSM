@@ -1,17 +1,23 @@
 {% extends "object/default.html" %}
 
 {% block title %}
-  {{data}}
+  {{title}}
 {% endblock %}
 
 {% block content %}
 
-<a href="{%url 'categories'%}">Список категорий</a><br>
-<a href="{%url 'obj_add'%}">Добавить вещь</a>
-<p>Вещи добавлены только в категорию "Шубы"</p>
-<p>Для добавления вещи, нужно авторизоваться</p>
-<a href="http://rms2022.pythonanywhere.com/admin">Авторизиция</a>
-<p>Логин: admin</p>
-<p>Пароль: 1234</p>
+<p>Личный кабинет пользователя {{ request.user.username }}</p>
+<a href="{% url 'obl_list' %}">Список моих вещей (Количество: {{count_obj}})</a><br>
+<a href="{% url 'account_change_password' %}">Сменить пароль</a><br>
+<a href="{% url 'account_reset_password' %}">Сбросить пароль на почту</a><br>
+<a href="{% url 'account_email' %}">Добавить адрес электронной почты</a><br>
+<a href="{% url 'account_email_verification_sent' %}">Страница с просьбой подтвердить email</a><br>
+<a href="{% url 'account_login' %}">Страница входа</a><br>
+<a href="{% url 'account_logout' %}">Страница выхода</a><br>
+
+
+
+
+
 
 {% endblock %}
