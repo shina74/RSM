@@ -38,9 +38,15 @@
             <p>Описание:  {{ obj.description }}</p>
             <p>Категория:  {{ obj.category }}</p>
             <p>
-                <a href="">Редактировать</a> / 
-                <a href="">Добавить фото</a> / 
+                <a href="{% url 'obj_edit' obj.id %}">Редактировать</a> /
                 <a href="{% url 'obj_delete' obj.id %}">Удалить</a>
+                <form enctype="multipart/form-data" method="post" action="{% url 'add_pic' obj.id %}" >
+                    {% csrf_token %}
+                    <p>
+                        <input type="file" name="photos" multiple accept="image/*,image/jpeg">
+                        <button type="submit">Добавить фото</button>
+                    </p>
+                </form>
             </p>
         </td>
         <td>

@@ -21,6 +21,7 @@ urlpatterns = [
     path('photo/<int:pk>/delete', views.pic_del, name='photo_delete'),
     path('obj/<int:pk>/delete', views.ObjDeleteView.as_view(), name='obj_delete'),
     path('obj_list/', views.ObjListView.as_view(), name='obl_list'),
-
+    path('add_pic/<int:pk>', views.add_pic, name='add_pic'),
+    path('obj/<int:pk>/edit', views.ObjUpdateView.as_view(), name='obj_edit'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns = format_suffix_patterns(urlpatterns)

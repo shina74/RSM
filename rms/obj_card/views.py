@@ -2,17 +2,18 @@ import json
 import os
 from rest_framework import generics, permissions
 
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.files.base import ContentFile
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
 from .models import Object, Picture, Category
-from .forms import ObjForm #PicForm
+from .forms import ObjForm, PicForm
 
 
 '''Дальше идёт код для загрузки БД. После заливки удалить'''
@@ -81,6 +82,12 @@ class CategoryDetailView(DetailView):
         return context
 
 
+class ObjUpdateView(UpdateView):
+    model = Object
+    template_name = 'object/obj_edit.html'
+    fields = ['name', 'description', 'category']
+    success_url = reverse_lazy('home')
+
 def obj_add(request):
     '''Добавить вещь'''
     if request.method == 'GET':
@@ -145,3 +152,19 @@ class ObjListView(ListView):
         context['photos'] = Picture.objects.filter(obj__owner=self.request.user)
         context['cat_user'] = Category.objects.filter(object__in=obj_user).distinct().get_ancestors(include_self=True)
         return context
+
+
+def add_pic(request, pk):
+    '''Кнопка добавления картинки'''
+    if request.method == 'POST':
+        form = PicForm(request.POST, request.FILES)
+        if form.is_valid():
+            for f in request.FILES.getlist('photos'):
+                data = f.read()
+                photo = Picture(obj=Object.objects.get(id=2))
+                photo.image.save(f.name, ContentFile(data))
+                photo.save()
+            return redirect('obj_detail', pk=pk)
+    else:
+        form = PicForm()
+    return redirect('obj_detail', pk=pk)
