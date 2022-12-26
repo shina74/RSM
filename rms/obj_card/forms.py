@@ -19,7 +19,13 @@ class ObjForm(forms.Form):
         widget=forms.FileInput(attrs={'multiple': 'multiple'})
         )
 
-    
+
+class PicForm(forms.Form):
+    photos = forms.ImageField(
+        label=u'Фотографии',
+        widget=forms.FileInput(attrs={'multiple': 'multiple'})
+        )
+
 # class ObjForm(forms.ModelForm):
 #
 #     class Meta:
@@ -27,8 +33,3 @@ class ObjForm(forms.Form):
 #         fields = ('name', 'description',)
 #
 #
-# class PicForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = Picture
-#         fields = ('image',)
