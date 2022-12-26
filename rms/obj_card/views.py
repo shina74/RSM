@@ -140,7 +140,7 @@ def add_pic(request, pk):
         if form.is_valid():
             for f in request.FILES.getlist('photos'):
                 data = f.read()
-                photo = Picture(obj=Object.objects.get(id=2))
+                photo = Picture(obj=Object.objects.get(id=pk))
                 photo.image.save(f.name, ContentFile(data))
                 photo.save()
             return redirect('obj_detail', pk=pk)
