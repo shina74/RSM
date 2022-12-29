@@ -1,11 +1,12 @@
 {% extends "object/default.html" %}
 {% load mptt_tags %}
 
-{% block title %}Список моих вещей{% endblock %}
+{% block title %}Список вещей{% endblock %}
 
 {% block content %}
 
 <p>Здесь выводятся все вещи из базы (нет привязки к категориям).</p>
+<p>Категории только те, в которых лежат вещи.</p>
 
 <style>
 	table{
@@ -20,8 +21,8 @@
     padding: 5px;
 	vertical-align: top;
 	}
-
-  </style>
+</style>
+{% if things %}
 	<table >
 		<tr>
 			<!-- Блок категорий, где лежат вещи пользовател -->
@@ -62,8 +63,7 @@
 							Фото
 						</th>
 					</tr>
-				
-				{% for thing in object_list %}
+				{% for thing in things %}
 					<tr>
 						<td>
 							<p>
@@ -88,16 +88,14 @@
 								{% endif %}
 							{% endfor %}
 						</td>
-				
 					</tr>
 					{% endfor %}
 				</table>
-
 			</td>
 		</tr>
 	</table>
-
-
-
+{% else %}
+<p>У пользователя <b>{{ request.user.username }}</b> нет добавленных вещей. </p>
+{% endif %}
 
 {% endblock %}

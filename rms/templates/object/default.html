@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Сайт личных вещей. {title}</title>
+  <title>Сайт личных вещей.</title>
 
   <!-- Bootstrap core CSS -->
   <link type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -27,11 +27,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-         <!-- <li class="nav-item active">
-           <a class="nav-link" href="#">Home
-             <span class="sr-only">(current)</span>
-           </a>
-         </li> -->
                     {% if request.user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'obj_add' %}">Добавить вещь</a>

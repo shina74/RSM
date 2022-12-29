@@ -20,7 +20,6 @@
     padding: 5px;
     vertical-align: top;
   }
-
 </style>
 
 {% recursetree obj_path %}
@@ -37,6 +36,7 @@
             <p>Название: {{ obj.name }}</p>
             <p>Описание:  {{ obj.description }}</p>
             <p>Категория:  {{ obj.category }}</p>
+            <p>ID пользователя: {{request.user.id}}</p>
             <p>
                 <a href="{% url 'obj_edit' obj.id %}">Редактировать</a> /
                 <a href="{% url 'obj_delete' obj.id %}">Удалить</a>

@@ -169,11 +169,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'   # отправка писем в консоль
+
 # Параметры для регистрации и входа (allauth)
-# ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True 
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'   # возможные варианты: username | email | username_email
+ACCOUNT_EMAIL_VERIFICATION = 'none'   # подтвердить почту, варианты: mandatory | optional | none
+ACCOUNT_CONFIRM_EMAIL_ON_GET = False   # будет ли адрес электронной почты автоматически подтверждаться
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3   # ...дней на подтверждение почты
+# ACCOUNT_SIGNUP_REDIRECT_URL = 'accounts/confirm-email/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
+
+# настройки почты для отпраки писем
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = ''
+SERVER_EMAIL = ''
