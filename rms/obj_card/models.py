@@ -4,6 +4,17 @@ from django.urls import reverse
 from mptt.models import MPTTModel, TreeForeignKey
 
 
+class Storage(models.Model):
+    name = models.CharField(max_length=256, blank=False)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Мосто хранения'
+        verbose_name_plural = 'Места хранения'
+
+
 class Category(MPTTModel):
     name = models.CharField(max_length=256, unique=False)
     parent = TreeForeignKey(
@@ -32,8 +43,10 @@ class Object(models.Model):
     name = models.CharField(max_length=100, blank=False, default='')
     description = models.TextField(blank=True, default='')
     owner = models.ForeignKey('auth.User', related_name='object', on_delete=models.CASCADE)
-    category = TreeForeignKey(Category, blank=True, null=True, on_delete=models.PROTECT, 
-        related_name='object', verbose_name='Категория')
+    category = TreeForeignKey(Category, related_name='object',  blank=True, null=True, on_delete=models.PROTECT, 
+        verbose_name='Категория')
+    storage = models.ForeignKey(Storage, related_name='object', blank=True, null=True, on_delete=models.PROTECT,
+        verbose_name='Место хранения')
 
     class Meta:
         ordering = ['name']
@@ -56,3 +69,4 @@ class Picture(models.Model):
     class Meta:
         verbose_name = 'Фотография'
         verbose_name_plural = 'Фотографии'
+

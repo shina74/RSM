@@ -11,10 +11,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.files.base import ContentFile
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
-from .models import Object, Picture, Category
+from .models import Object, Picture, Category, Storage
 from .forms import ObjForm, PicForm
 
 
@@ -31,7 +32,7 @@ class AccountIndex(LoginRequiredMixin, TemplateView):
 
 @login_required
 def index(request):
-    '''Временная функция для главной'''
+    '''Главная страница'''
     data = 'Сайт'
     return render(request, 'object/index.html', {
         'data': data,
@@ -45,7 +46,7 @@ class CategoryListView(ListView):
     template_name = 'object/category_list.html'
 
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     '''Выводит вещи из выбранной категории'''
     model = Category
     template_name = "object/category_obj.html"
@@ -60,11 +61,12 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class ObjUpdateView(UpdateView):
+class ObjUpdateView(LoginRequiredMixin, UpdateView):
     model = Object
     template_name = 'object/obj_edit.html'
     fields = ['name', 'description', 'category']
     success_url = reverse_lazy('home')
+
 
 @login_required
 def obj_add(request):
@@ -112,7 +114,7 @@ def pic_del(request, pk):
     return redirect('obj_detail', pk=pk)
 
 
-class ObjDeleteView(DeleteView):
+class ObjDeleteView(LoginRequiredMixin, DeleteView):
     '''Удалить вещь'''
     model = Object
     template_name = 'object/obj_delete.html'
@@ -147,3 +149,75 @@ def add_pic(request, pk):
     else:
         form = PicForm()
     return redirect('obj_detail', pk=pk)
+
+
+class SearchObject(LoginRequiredMixin, ListView):
+    '''Страница поиска'''
+    model = Object
+    template_name = 'object/search.html'
+
+    def get_context_data(self, **kwargs):
+        query = self.request.GET.get('q')
+        context = super().get_context_data(**kwargs)
+        context['search_result'] = Object.objects.filter(name__icontains=query)
+        # context['pic'] = Picture.objects.filter(obj=pk)
+
+        return context
+
+
+class ObjPublic(DetailView):
+    '''Подробное описание вещи для всех пользователей'''
+    model = Object
+    template_name = 'object/obj_public.html'
+    
+    def get_context_data(self, **kwargs):
+        pk=self.kwargs['pk']
+        obj = Object.objects.get(pk=pk)
+        context = super().get_context_data(**kwargs)
+        context['obj'] = obj
+        context['photos'] = Picture.objects.filter(obj=obj)
+        return context
+
+
+# class StorageList(LoginRequiredMixin, ListView):
+#     '''Список мест хранения'''
+#     model = Storage
+#     template_name = 'object/storage_list.html'
+#     context_object_name = 'storage_list'
+
+
+# class StorageDetail(LoginRequiredMixin, DetailView):
+#     '''Список вещей в выбраном месте хранения'''
+#     model = Storage
+#     template_name = 'object/storage_detail.html'
+
+#     def get_context_data(self, **kwargs):
+#         pk=self.kwargs['pk']
+#         storage = Storage.objects.get(pk=pk)
+#         obj = Object.objects.filter(storage=storage)
+#         context = super().get_context_data(**kwargs)
+#         context['obj'] = obj
+#         context['photos'] = Picture.objects.filter(obj=obj)
+#         return context
+
+
+# class StorageDelete(LoginRequiredMixin, DeleteView):
+#     '''Удалить место хранения'''
+#     model = Storage
+#     # template_name = 'object/storage_delete.html'
+#     success_url = reverse_lazy('storage_list')
+
+
+# class StorageUpdate(LoginRequiredMixin, UpdateView):
+#     '''Редактировать место хранения'''
+#     model = Storage
+#     template_name = 'object/storage_edit.html'
+#     fields = ['name']
+#     # success_url = reverse_lazy('storage_list')
+
+
+# class StorageCreate(LoginRequiredMixin, UpdateView):
+#     '''Добавление места хранения'''
+#     model = Storage
+#     template_name = 'object/storage_create.html'
+#     fields = ['name']
