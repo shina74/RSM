@@ -5,7 +5,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Storage(models.Model):
-    name = models.CharField(max_length=256, blank=False)
+    name = models.CharField(max_length=150, blank=False, unique=True)
 
     def __str__(self):
         return self.name
@@ -16,7 +16,7 @@ class Storage(models.Model):
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=256, unique=False)
+    name = models.CharField(max_length=150, unique=False)
     parent = TreeForeignKey(
         'self', 
         on_delete=models.CASCADE, 

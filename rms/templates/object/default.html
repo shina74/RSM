@@ -34,11 +34,11 @@
                 <ul class="navbar-nav ml-auto">
                     {% if request.user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'obj_add' %}">Добавить вещь</a>
+                            <a class="nav-link" href="{% url 'storage_list' %}">Места хранения</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'obl_list' %}">Список моих вещей</a>
-                            </li>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'categories' %}">Список всех категорий</a>
                         </li>

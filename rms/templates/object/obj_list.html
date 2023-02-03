@@ -58,6 +58,9 @@
 							Категория
 						</th>
 						<th>
+							Место
+						</th>
+						<th>
 							Пользователь
 						</th>
 						<th>
@@ -80,6 +83,9 @@
 							{{thing.category}}
 						</td>
 						<td>
+							{{thing.storage}}
+						</td>
+						<td>
 							{{thing.owner}}
 						</td>
 						<td>
@@ -98,5 +104,6 @@
 {% else %}
 <p>У пользователя <b>{{ request.user.username }}</b> нет добавленных вещей. </p>
 {% endif %}
-
+<br>
+<a class="nav-link" href="{% url 'obj_add' %}"><b>Добавить вещь</b></a>
 {% endblock %}

@@ -46,6 +46,7 @@ class CategoryListView(ListView):
     template_name = 'object/category_list.html'
 
 
+
 class CategoryDetailView(LoginRequiredMixin, DetailView):
     '''Выводит вещи из выбранной категории'''
     model = Category
@@ -64,7 +65,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
 class ObjUpdateView(LoginRequiredMixin, UpdateView):
     model = Object
     template_name = 'object/obj_edit.html'
-    fields = ['name', 'description', 'category']
+    fields = ['name', 'description', 'category', 'storage']
     success_url = reverse_lazy('home')
 
 
@@ -81,6 +82,7 @@ def obj_add(request):
                                         name=form.cleaned_data['name'],
                                         description=form.cleaned_data['dis'],
                                         category=form.cleaned_data['category'],
+                                        storage=form.cleaned_data['storage'],
                                         )
             print(form.cleaned_data['category'])
                 
@@ -179,45 +181,87 @@ class ObjPublic(DetailView):
         return context
 
 
-# class StorageList(LoginRequiredMixin, ListView):
-#     '''Список мест хранения'''
-#     model = Storage
-#     template_name = 'object/storage_list.html'
-#     context_object_name = 'storage_list'
+class StorageList(LoginRequiredMixin, ListView):
+    '''Список мест хранения'''
+    model = Storage
+    template_name = 'object/storage_list.html'
+    context_object_name = 'storage_list'
 
 
-# class StorageDetail(LoginRequiredMixin, DetailView):
-#     '''Список вещей в выбраном месте хранения'''
-#     model = Storage
-#     template_name = 'object/storage_detail.html'
+class StorageDetail(LoginRequiredMixin, DetailView):
+    '''Список вещей в выбраном месте хранения'''
+    model = Storage
+    template_name = 'object/storage_detail.html'
 
-#     def get_context_data(self, **kwargs):
-#         pk=self.kwargs['pk']
-#         storage = Storage.objects.get(pk=pk)
-#         obj = Object.objects.filter(storage=storage)
-#         context = super().get_context_data(**kwargs)
-#         context['obj'] = obj
-#         context['photos'] = Picture.objects.filter(obj=obj)
-#         return context
-
-
-# class StorageDelete(LoginRequiredMixin, DeleteView):
-#     '''Удалить место хранения'''
-#     model = Storage
-#     # template_name = 'object/storage_delete.html'
-#     success_url = reverse_lazy('storage_list')
+    def get_context_data(self, **kwargs):
+        pk=self.kwargs['pk']
+        storage = Storage.objects.get(pk=pk)
+        obj = Object.objects.filter(storage=storage)
+        context = super().get_context_data(**kwargs)
+        context['obj'] = obj
+        context['storage'] = storage
+        # context['photos'] = Picture.objects.filter(obj=obj)
+        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)
+        return context
 
 
-# class StorageUpdate(LoginRequiredMixin, UpdateView):
-#     '''Редактировать место хранения'''
-#     model = Storage
-#     template_name = 'object/storage_edit.html'
-#     fields = ['name']
-#     # success_url = reverse_lazy('storage_list')
+class StorageDelete(LoginRequiredMixin, DeleteView):
+    '''Удалить место хранения'''
+    model = Storage
+    template_name = 'object/storage_delete.html'
+    success_url = reverse_lazy('storage_list')
 
 
-# class StorageCreate(LoginRequiredMixin, UpdateView):
-#     '''Добавление места хранения'''
-#     model = Storage
-#     template_name = 'object/storage_create.html'
-#     fields = ['name']
+class StorageUpdate(LoginRequiredMixin, UpdateView):
+    '''Редактировать место хранения'''
+    model = Storage
+    template_name = 'object/storage_edit.html'
+    fields = ['name']
+    success_url = reverse_lazy('storage_list')
+
+
+class StorageCreate(LoginRequiredMixin, CreateView):
+    '''Добавление места хранения'''
+    model = Storage
+    template_name = 'object/storage_create.html'
+    fields = ['name']
+    success_url = reverse_lazy('storage_list')
+
+'''Дальше идёт код для загрузки БД. После заливки удалить'''
+
+def set_parent(request):   # заполняем parent
+    categoties = Category.objects.all()
+    for cat in categoties:
+        try:
+            id_parent = Category.objects.get(id_old=cat.id_parent_old)
+            cat.parent = id_parent
+            cat.save()
+            print(cat.id, cat.name, cat.id_old, cat.id_parent_old, )
+        except:
+            print('Нет объекта с id_old', cat.id_parent_old, (cat.name))
+    data = Category.objects.all()
+    return render(request, "object/index.html", {'data': data})
+
+
+def load_cat(request):   # выгружаем из json файла и записываем в базу
+    print(os.getcwd ())
+    loads = ''
+    with open('./category-lv-new.json', 'r', encoding='utf-8') as f:
+        loads = f.read()
+    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
+
+    for cat in cat_dict:
+        print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
+        Category.objects.create(
+            name=cat_dict[cat][0], 
+            id_old=cat, 
+            id_parent_old=cat_dict[cat][1]
+            )
+        
+
+    data = Category.objects.all()
+
+    return render(request, "object/index.html", {'data': data})
+    
+
+'''Конец блока для загрузки БД'''
