@@ -27,6 +27,7 @@ urlpatterns = [
     path('storage/<int:pk>/edit', views.StorageUpdate.as_view(), name='storage_edit'),
     path('storage/create', views.StorageCreate.as_view(), name='storage_create'),
 
+    # Адреса для загрузки каталога
     # path('load_cat/', views.load_cat),
     # path('set_parent/', views.set_parent),
 

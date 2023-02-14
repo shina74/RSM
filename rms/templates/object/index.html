@@ -6,6 +6,8 @@
 
 {% block content %}
 
+
+
 <p>Личный кабинет пользователя {{ request.user.username }}</p>
 <a href="{% url 'obl_list' %}">Список моих вещей (Количество: {{count_obj}})</a><br>
 <a href="{% url 'account_change_password' %}">Сменить пароль</a><br>

@@ -175,20 +175,20 @@ MEDIA_ROOT = BASE_DIR / 'media'
 ACCOUNT_EMAIL_REQUIRED = True 
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'   # возможные варианты: username | email | username_email
-ACCOUNT_EMAIL_VERIFICATION = 'none'   # подтвердить почту, варианты: mandatory | optional | none
+ACCOUNT_AUTHENTICATION_METHOD = 'email'   # возможные варианты: username | email | username_email
+ACCOUNT_EMAIL_VERIFICATION = 'optional'   # подтвердить почту, варианты: mandatory | optional | none
 ACCOUNT_CONFIRM_EMAIL_ON_GET = False   # будет ли адрес электронной почты автоматически подтверждаться
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3   # ...дней на подтверждение почты
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 5   # ...дней на подтверждение почты
 # ACCOUNT_SIGNUP_REDIRECT_URL = 'accounts/confirm-email/'
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = 'accounts/login/'
 
 # настройки почты для отпраки писем
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_SSL = True
+EMAIL_HOST = env.str('EMAIL_HOST')
+EMAIL_PORT = env.int('EMAIL_PORT')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = ''
-SERVER_EMAIL = ''
+DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL')
+SERVER_EMAIL = env.str('SERVER_EMAIL')

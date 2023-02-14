@@ -5,7 +5,8 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Storage(models.Model):
-    name = models.CharField(max_length=150, blank=False, unique=True)
+    name = models.CharField(max_length=100, blank=False, unique=False)
+    user = models.ForeignKey('auth.User', related_name='storage', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

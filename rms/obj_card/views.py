@@ -187,6 +187,11 @@ class StorageList(LoginRequiredMixin, ListView):
     template_name = 'object/storage_list.html'
     context_object_name = 'storage_list'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['storage_list'] = Storage.objects.filter(user = self.request.user)
+        return context
+
 
 class StorageDetail(LoginRequiredMixin, DetailView):
     '''Список вещей в выбраном месте хранения'''
@@ -201,7 +206,7 @@ class StorageDetail(LoginRequiredMixin, DetailView):
         context['obj'] = obj
         context['storage'] = storage
         # context['photos'] = Picture.objects.filter(obj=obj)
-        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)
+        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)   # нужно оптимизировать
         return context
 
 
@@ -226,6 +231,12 @@ class StorageCreate(LoginRequiredMixin, CreateView):
     template_name = 'object/storage_create.html'
     fields = ['name']
     success_url = reverse_lazy('storage_list')
+
+    def form_valid(self, form):
+        storage = form.save(commit=False)
+        storage.user = self.request.user
+        return super().form_valid(form)
+
 
 '''Дальше идёт код для загрузки БД. После заливки удалить'''
 
