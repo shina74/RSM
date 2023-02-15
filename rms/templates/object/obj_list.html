@@ -23,7 +23,11 @@
 	}
 </style>
 
-{% if things %}
+{% if object_list %}
+	<form action="" method="get">
+		{{ things.form.as_p }}
+		<input type="submit" value="Найти" />
+	</form>
 	<table >
 		<tr>
 			<!-- Блок категорий, где лежат вещи пользовател -->
@@ -67,7 +71,7 @@
 							Фото
 						</th>
 					</tr>
-				{% for thing in things %}
+				{% for thing in object_list %}
 					<tr>
 						<td>
 							<p>

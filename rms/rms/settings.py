@@ -14,13 +14,12 @@ import environ
 from pathlib import Path
 
 
-# Чтение файлов переменных окруженияPython
-env = environ.Env()
-environ.Env.read_env()
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Чтение файлов переменных окружения Python
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR.resolve().parent, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -53,6 +52,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.yandex',
+    'allauth.socialaccount.providers.vk',
     'rest_framework',
     'django_mptt_admin',
     'mptt',
@@ -115,6 +116,9 @@ SITE_ID = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        },
         'NAME': env.str('NAME_DB'),
         'USER': env.str('USER_DB'),
         'PASSWORD': env.str('PASSWORD_DB'),
