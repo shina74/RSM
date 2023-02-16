@@ -1,8 +1,28 @@
 from django import forms
-
 from mptt.forms import MoveNodeForm, TreeNodeChoiceField
-
 from .models import Object, Picture, Category, Storage
+
+
+
+class FilterForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        self.obj_user = kwargs.pop('obj_user', None)
+        super(FilterForm, self).__init__(*args, **kwargs)
+        self.fields['storage'].queryset = Storage.objects.filter(user=self.user)
+        self.fields['category'].queryset = Category.objects.filter(object__in=self.obj_user).distinct()
+
+    storage = forms.ModelChoiceField(
+        queryset=None,
+        label=u'Место хранения',
+        required=False,
+        ) 
+
+    category = TreeNodeChoiceField(
+        queryset=None, 
+        label="Категория",
+        required=False,
+        )
 
 
 class ObjForm(forms.Form):
@@ -29,6 +49,8 @@ class PicForm(forms.Form):
         label=u'Фотографии',
         widget=forms.FileInput(attrs={'multiple': 'multiple'})
         )
+
+
 
 # class ObjForm(forms.ModelForm):
 #

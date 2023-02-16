@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_mptt_admin',
     'mptt',
+    'django_filters',
 
     'obj_card',
 ]

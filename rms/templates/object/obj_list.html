@@ -5,9 +5,6 @@
 
 {% block content %}
 
-<p>Здесь выводятся все вещи из базы (нет привязки к категориям).</p>
-<p>Категории только те, в которых лежат вещи.</p>
-
 <style>
 	table{
 	  margin: 0px 0px;
@@ -23,11 +20,12 @@
 	}
 </style>
 
-{% if object_list %}
 	<form action="" method="get">
-		{{ things.form.as_p }}
+		{{ things.as_p }}
 		<input type="submit" value="Найти" />
 	</form>
+	<br>
+{% if object_list %}
 	<table >
 		<tr>
 			<!-- Блок категорий, где лежат вещи пользовател -->

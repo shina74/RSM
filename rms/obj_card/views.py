@@ -12,11 +12,12 @@ from django.core.files.base import ContentFile
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.db.models import Q
+from mptt.forms import MoveNodeForm, TreeNodeChoiceField
 
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
 from .models import Object, Picture, Category, Storage
-from .forms import ObjForm, PicForm
+from .forms import ObjForm, PicForm, FilterForm
 from .filters import ObjFilter
 
 
@@ -129,6 +130,9 @@ class ObjListView(ListView):
     model = Object
     template_name = 'object/obj_list.html'
 
+    
+
+
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = ObjFilter(self.request.GET, queryset=Object.objects.filter(owner=self.request.user))
@@ -137,8 +141,8 @@ class ObjListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         obj_user = Object.objects.filter(owner=self.request.user)
-        context['things'] = self.filterset
-        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)
+        context['things'] = FilterForm(self.request.GET, user = self.request.user, obj_user=obj_user)
+        context['photos'] = Picture.objects.filter(obj__in=obj_user)
         context['cat_user'] = Category.objects.filter(object__in=obj_user).distinct().get_ancestors(include_self=True)
         return context
 
@@ -211,8 +215,7 @@ class StorageDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['obj'] = obj
         context['storage'] = storage
-        # context['photos'] = Picture.objects.filter(obj=obj)
-        context['photos'] = Picture.objects.filter(obj__owner=self.request.user)   # нужно оптимизировать
+        context['photos'] = Picture.objects.filter(obj__in=obj)
         return context
 
 
