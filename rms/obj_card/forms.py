@@ -6,10 +6,9 @@ from .models import Object, Picture, Category, Storage
 
 class FilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
         self.obj_user = kwargs.pop('obj_user', None)
         super(FilterForm, self).__init__(*args, **kwargs)
-        self.fields['storage'].queryset = Storage.objects.filter(user=self.user)
+        self.fields['storage'].queryset = Storage.objects.filter(object__in=self.obj_user).distinct()
         self.fields['category'].queryset = Category.objects.filter(object__in=self.obj_user).distinct()
 
     storage = forms.ModelChoiceField(

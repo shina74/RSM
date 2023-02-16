@@ -130,18 +130,15 @@ class ObjListView(ListView):
     model = Object
     template_name = 'object/obj_list.html'
 
-    
-
-
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = ObjFilter(self.request.GET, queryset=Object.objects.filter(owner=self.request.user))
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         obj_user = Object.objects.filter(owner=self.request.user)
-        context['things'] = FilterForm(self.request.GET, user = self.request.user, obj_user=obj_user)
+        context = super().get_context_data(**kwargs)
+        context['things'] = FilterForm(self.request.GET, obj_user=obj_user)
         context['photos'] = Picture.objects.filter(obj__in=obj_user)
         context['cat_user'] = Category.objects.filter(object__in=obj_user).distinct().get_ancestors(include_self=True)
         return context
