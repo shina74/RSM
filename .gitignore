@@ -2,9 +2,12 @@
 venv/
 env/
 **/media/*
-**/static/*
-!rms/static/assets/*
-!rms/static/vendor/*
+**/static/admin/*
+**/static/django_mptt_admin/*
+**/static/mptt/*
+**/static/rest_framework/*
+# !rms/static/assets/*
+# !rms/static/vendor/*
 **/__pycache__/
 **/migrations/*
 !obj_card/migrations/__init__.py
