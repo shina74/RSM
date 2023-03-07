@@ -164,6 +164,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
@@ -182,11 +183,17 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'   # возможные варианты: username | email | username_email
 ACCOUNT_EMAIL_VERIFICATION = 'optional'   # подтвердить почту, варианты: mandatory | optional | none
-ACCOUNT_CONFIRM_EMAIL_ON_GET = False   # будет ли адрес электронной почты автоматически подтверждаться
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True   # будет ли адрес электронной почты автоматически подтверждаться
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 5   # ...дней на подтверждение почты
 # ACCOUNT_SIGNUP_REDIRECT_URL = 'accounts/confirm-email/'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'accounts/login/'
+
+# Переопределяем формы allauth
+ACCOUNT_FORMS = {
+    'login': 'obj_card.forms.NewLoginForm',
+    'signup': 'obj_card.forms.NewSignupForm',
+}
 
 # настройки почты для отпраки писем
 EMAIL_HOST = env.str('EMAIL_HOST')

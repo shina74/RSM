@@ -1,7 +1,9 @@
 .idea/
 venv/
+env/
 **/media/*
 **/static/*
+!rms/static/assets/*
 !rms/static/vendor/*
 **/__pycache__/
 **/migrations/*

@@ -1,5 +1,6 @@
 from django import forms
 from mptt.forms import MoveNodeForm, TreeNodeChoiceField
+from allauth.account.forms import LoginForm, SignupForm
 from .models import Object, Picture, Category, Storage
 
 
@@ -28,7 +29,6 @@ class ObjForm(forms.Form):
 
     name = forms.CharField(label=u'Название')
     dis = forms.CharField(label=u'Описание')
-    # storage = forms.CharField(label=u'Места хранения')
     storage = forms.ModelChoiceField(
         queryset=Storage.objects.all(),
         label=u'Место хранения',
@@ -50,11 +50,26 @@ class PicForm(forms.Form):
         )
 
 
+class NewLoginForm(LoginForm):
+    error_messages = {
+        "account_inactive": "Этот аккаунт заблокирован",
+        "email_password_mismatch": "Неверный email или пароль",
+        "username_password_mismatch": "Неверный логин или пароль",
+    }
 
-# class ObjForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = Object
-#         fields = ('name', 'description',)
-#
-#
+    def login(self, *args, **kwargs):
+        # Add your own processing here.
+
+        # You must return the original result.
+        return super(NewLoginForm, self).login(*args, **kwargs)
+
+
+class NewSignupForm(SignupForm):
+    error_messages = {  
+        'password2': "Два пароля не совпадают",
+    }
+    def clean(self):
+        cleaned_data = super(NewSignupForm, self).clean()
+
+        return cleaned_data
+

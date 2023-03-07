@@ -8,8 +8,8 @@ from . import views
 
 
 urlpatterns = [
-
-    path('', views.AccountIndex.as_view(), name='home'),
+    path('', views.index, name='home'),
+    path('account/', views.AccountIndex.as_view(), name='account'),
     path('cat/', views.CategoryListView.as_view(), name='categories'),
     path('cat/<int:pk>/', views.CategoryDetailView.as_view(), name='category_obj'),
     path('obj_add', views.obj_add, name='obj_add'),

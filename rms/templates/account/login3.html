@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <script defer src="page2.js"></script>
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="form_container">
+        <a href="index.html" class="back_button"><img src="images/Arrows_button.svg" alt="Back button"></a>
+        
+        <div class="login-form">
+            <div class="login-form_profile">
+                <h1 class="login-form_h1">Войти в профиль</h1>
+                <form id="form" class= "login-form_profile_input">
+                    <div class="input-control input-control_wrp">
+                        <input id="id_email" class="input_style" type="text" name="email" required>
+                        <span class="floating-label">E-mail</span>
+                        <div class="error" id="error_m"></div>
+                    </div>
+                    <div class="input-control input-control_wrp">
+                        <input id="id_password" class="input_style" type="password" name="password" required>
+                        <span class="floating-label">Пароль</span>
+                        <div class="error" id="error_m"></div>
+                    </div>
+                    <input type="checkbox" id="checkbox">
+                    <label for="checkbox">Запомнить меня</label>
+                    <button type="submit" class="b1">Продолжить</button>
+                </form>
+
+            </div>
+        </div>
+                
+        <div class="form-middle">
+            <div class="form-middle_line1"></div>
+            <p id="form-middle_text">Или</p>
+            <div class="form-middle_line2"></div>
+        </div>
+                
+        <div class="login-form">
+            <div class="login-form_social">
+                <h1 class="login-form_h1">Войти с помощью</h1>
+                <button class="login-form_social_googlebutton">Google</button>
+                <button class="login-form_social_fbbutton">Вконтакте</button>
+                <button class="login-form_social_applebutton">Apple ID</button>
+                <a href="page3.html"><h2 class="login-form_social_h2">Еще не зарегистрированы?</h2></a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

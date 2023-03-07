@@ -24,7 +24,7 @@ from .filters import ObjFilter
 
 class AccountIndex(LoginRequiredMixin, TemplateView):
     '''Личный кабинет'''
-    template_name = 'object/index.html'
+    template_name = 'object/account.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -32,13 +32,14 @@ class AccountIndex(LoginRequiredMixin, TemplateView):
         return context
 
 
-@login_required
+# @login_required
 def index(request):
     '''Главная страница'''
     data = 'Сайт'
+    count_obj = Object.objects.filter(owner=request.user.id).count() if request.user else None
     return render(request, 'object/index.html', {
         'data': data,
-        'count_obj': Object.objects.filter(owner=request.user).count(),
+        'count_obj': count_obj,
         })
 
 
