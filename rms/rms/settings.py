@@ -100,8 +100,6 @@ AUTHENTICATION_BACKENDS = [
 
 WSGI_APPLICATION = 'rms.wsgi.application'
 
-LOGIN_URL = '/accounts/login/'
-
 SITE_ID = 1
 
 # Database

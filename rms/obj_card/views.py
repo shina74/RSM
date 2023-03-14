@@ -17,7 +17,7 @@ from mptt.forms import MoveNodeForm, TreeNodeChoiceField
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
 from .models import Object, Picture, Category, Storage
-from .forms import ObjForm, PicForm, FilterForm
+from .forms import ObjForm, PicForm, FilterForm, ObjUpdateForm
 from .filters import ObjFilter
 
 
@@ -66,10 +66,51 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
 
 
 class ObjUpdateView(LoginRequiredMixin, UpdateView):
+    '''Редактирование вещи'''
     model = Object
     template_name = 'object/obj_edit.html'
     fields = ['name', 'description', 'category', 'storage']
     success_url = reverse_lazy('home')
+
+
+def obj_update_view(request, pk):
+    context ={}
+    if request.method == 'GET':
+        obj = Object.objects.get(id=pk)
+        pic = Picture.objects.filter(obj=obj)
+
+        date = {
+            'name': obj.name,
+            'description': obj.description,
+            'category': obj.category,
+            'storage': obj.storage,
+        }
+        form = ObjUpdateForm(date)
+        context["photos"] = pic
+
+    elif request.method == 'POST':
+        form = ObjUpdateForm(request.POST, request.FILES)
+        print('post', form.is_valid())
+        print(request.POST)
+        if form.is_valid():
+            print('valid')
+            obj = Object.objects.filter(id=pk).update(
+            name = form.cleaned_data['name'],
+            description = form.cleaned_data['description'],
+            category = form.cleaned_data['category'],
+            storage = form.cleaned_data['storage'],
+            )
+            print('request.FILES', request.FILES)
+            if request.FILES:
+                for file in request.FILES.getlist('photos'):
+                    data = file.read()
+                    photo = Picture(obj=Object.objects.get(id=pk))
+                    photo.image.save(file.name, ContentFile(data))
+                    photo.save()
+        return redirect('obj_detail', pk=pk)
+
+    context["form"] = form
+    return render(request, "object/obj_edit.html", context)
 
 
 @login_required
@@ -83,12 +124,10 @@ def obj_add(request):
         if form.is_valid():
             obj = Object.objects.create(owner=request.user,
                                         name=form.cleaned_data['name'],
-                                        description=form.cleaned_data['dis'],
+                                        description=form.cleaned_data['description'],
                                         category=form.cleaned_data['category'],
                                         storage=form.cleaned_data['storage'],
                                         )
-            print(form.cleaned_data['category'])
-                
             for f in request.FILES.getlist('photos'):
                 data = f.read()
                 photo = Picture(obj=obj)

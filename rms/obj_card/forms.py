@@ -28,7 +28,7 @@ class FilterForm(forms.Form):
 class ObjForm(forms.Form):
 
     name = forms.CharField(label=u'Название')
-    dis = forms.CharField(label=u'Описание')
+    description = forms.CharField(label=u'Описание')
     storage = forms.ModelChoiceField(
         queryset=Storage.objects.all(),
         label=u'Место хранения',
@@ -39,6 +39,24 @@ class ObjForm(forms.Form):
         )
     photos = forms.ImageField(
         label=u'Фотографии', 
+        widget=forms.FileInput(attrs={'multiple': 'multiple'})
+        )
+    
+
+class ObjUpdateForm(forms.Form):
+    name = forms.CharField(label=u'Название')
+    description = forms.CharField(label=u'Описание')
+    storage = forms.ModelChoiceField(
+        queryset=Storage.objects.all(),
+        label=u'Место хранения',
+        ) 
+    category = TreeNodeChoiceField(
+        queryset=Category.objects.all(), 
+        label="Выберите категорию",
+        )
+    photos = forms.ImageField(
+        label=u'Фотографии', 
+        required=False,
         widget=forms.FileInput(attrs={'multiple': 'multiple'})
         )
 
