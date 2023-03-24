@@ -1,8 +1,11 @@
 from django import forms
-from mptt.forms import MoveNodeForm, TreeNodeChoiceField
-from allauth.account.forms import LoginForm, SignupForm
-from .models import Object, Picture, Category, Storage
+from django.forms.widgets import Select, SelectMultiple
 
+from mptt.forms import MoveNodeForm, TreeNodeChoiceField
+
+from allauth.account.forms import LoginForm, SignupForm
+
+from .models import Object, Picture, Category, Storage
 
 
 class FilterForm(forms.Form):
@@ -11,11 +14,12 @@ class FilterForm(forms.Form):
         super(FilterForm, self).__init__(*args, **kwargs)
         self.fields['storage'].queryset = Storage.objects.filter(object__in=self.obj_user).distinct()
         self.fields['category'].queryset = Category.objects.filter(object__in=self.obj_user).distinct()
-
+    
     storage = forms.ModelChoiceField(
         queryset=None,
         label=u'Место хранения',
         required=False,
+        widget=forms.Select(attrs={'class':'hidden'}),
         ) 
 
     category = TreeNodeChoiceField(
@@ -23,7 +27,7 @@ class FilterForm(forms.Form):
         label="Категория",
         required=False,
         )
-
+    
 
 class ObjForm(forms.Form):
 

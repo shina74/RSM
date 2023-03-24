@@ -1,47 +1,106 @@
-{% extends "object/default.html" %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/assets/css/style2.css">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>Редактирование вещи</title>
+</head>
+<body>
+    <header class="header-newCard">
+      <div class="header-newCard_div">
+      <a href="page4.html"><img class="arrows-button" src="/static/assets/images/Arrows_button.svg" alt=""></a>
+        <h1>Редактировать карточку вещи</h1>
+      <a href="page4.html"><img class="close-button" src="/static/assets/images/Close_button.svg" alt=""></a>
+      </div>
 
-{% block title %}
-    Редактирование вещи
-{% endblock title %}
+    </header>
+    <main>
+        <div class="container">
+            <div class="container-form">
+                <form method="POST" enctype="multipart/form-data" class="post-form">
+                    <div class="container-form_name">
+                        <label for="first-name">Наименование *</label>
+                        <input class="input-name"  type="text" id="id_name" placeholder="Введите наименование">
+                    </div>
 
-{% block content %}
-    <form method="POST" enctype="multipart/form-data" class="post-form">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {{ form.name_of_field.errors }} 
-        {{ field.errors }}
-        <div class="fieldWrapper">
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_for_label }}">Название:</label>
-            {{ form.name }}
+                    <div class="container-form_category">
+                        <label for="Category">Категория</label>
+
+
+                        <button class="button-form"></button> 
+                        <ul class="dropdown__list-three">
+                            <li class="dropdown__list-item-three" data-value="place1"></li>
+                        </ul>
+                        <input type="text" name="select-category" value="" class="dropdown__input-hidden-three">
+
+                    </div>
+
+                    <div class="container-form_place">
+                        <label for="last-name">Место хранения</label>
+
+                        <button class="button-form-four"></button> 
+                        <ul class="dropdown__list-four">
+                            <li class="dropdown__list-item-four" data-value="place1"></li>
+
+                            <button class="dropdown__list-button"> + Добавить место хранения</button> 
+                        </ul>
+                        <input type="text" name="select-category" value="" class="dropdown__input-hidden-four">
+                    </div>
+
+                    <div class="container-form_description">
+                        <label for="message">Описание</label>
+                        <textarea class="textarea-description" rows="6" id="message"></textarea>
+                    </div>
+
+                    <div class="container-form_photo">
+                        <label>Фотографии * </label>
+                        {% for photo in photos %}
+                            <img src="{{ photo.image.url }}" width="300px">
+                            <a href="{% url  'photo_delete' photo.id %}">Удалить фото</a>
+                        {% endfor %}
+                        <label class="upload-icon1" for="file-upload"></label>  
+                        <label class="upload-icon2" for="file-upload"></label> 
+                        <label class="upload-icon3" for="file-upload"></label>  
+                        <label class="upload-icon4" for="file-upload"></label>  
+                        <label class="upload-icon" for="file-upload"><img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload"></label>  
+                        <input id="file-upload" type="file">
+                    </div>
+
+                    <div class="container-form_button">
+                        <button class="button_send"  type="submit">Сохранить</button>
+                    </div>
+
+                    <div class="container-form_button-delete">
+                        <button class="button_send-delete"  type="submit">Удалить</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="fieldWrapper">
-            {{ form.description.errors }}
-            <label for="{{ form.description.id_for_label }}">Описание:</label>
-            {{ form.description }}
+        <div class="modal-category">
+            <div class="modal_main-category">
+              <h2 class="modal_title-category">Добавить новое место хранения</h2>
+              <input class="modal_input" type="text" name="modal-category" placeholder="Название">
+              <button class="modal-category_button1">Отмена</button>
+              <button class="modal-category_button2">Готово</button>
+            </div>
         </div>
-        <div class="fieldWrapper">
-            {{ form.storage.errors }}
-            <label for="{{ form.storage.id_for_label }}">Место:</label>
-            {{ form.storage }}
+        <div class="modal-delete">
+            <div class="modal_main-delete">
+
+              <h2 class="modal_title-delete">Вы действительно хотите удалить эту вещь?</h2>
+              
+              <button class="modal-delete_button1">Да</button>
+              <button class="modal-delete_button2">Нет</button>
+
+            </div>
         </div>
-        <div class="fieldWrapper">
-            {{ form.category.errors }}
-            <label for="{{ form.category.id_for_label }}">Категория:</label>
-            {{ form.category }}
-        </div>
-        <div>
-          {% for photo in photos %}
-            <img src="{{ photo.image.url }}" width="300px">
-            <a href="{% url  'photo_delete' photo.id %}">Удалить фото</a>
-            <br>
-          {% endfor %}
-          </div>  
-        <div class="fieldWrapper">
-            {{ form.photos.errors }}
-            <label for="{{ form.photos.id_for_label }}">Фотография:</label>
-            {{ form.photos }}
-        </div>
-        <button type="submit">Сохранить</button>
-    </form>
-{% endblock %}
+    </main>
+    <script src="/static/assets/js/main2.js"></script>
+
+
+</body>
+</html>

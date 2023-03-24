@@ -1,38 +1,126 @@
-{% extends "object/default.html" %} 
-{% block title %}
-    Добавление вещи
-{% endblock %}
-{% block content %}
-    <form method="POST" enctype="multipart/form-data" class="post-form">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {{ form.name_of_field.errors }} 
-        {{ field.errors }}
-        <div class="fieldWrapper">
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_for_label }}">Название:</label>
-            {{ form.name }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/assets/css/style2.css">
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <title>New card</title>
+</head>
+<body>
+    <header class="header-newCard">
+        <div class="header-newCard_div">
+            <a href="{% url 'obl_list' %}"><img class="arrows-button" src="static/assets/images/Arrows_button.svg" alt=""></a>
+            <h1>Создать карточку вещи</h1>
+            <a href="{% url 'obl_list' %}"><img class="close-button" src="static/assets/images/Close_button.svg" alt=""></a>
         </div>
-        <div class="fieldWrapper">
-            {{ form.description.errors }}
-            <label for="{{ form.description.id_for_label }}">Описание:</label>
-            {{ form.description }}
-        </div>
-        <div class="fieldWrapper">
-            {{ form.storage.errors }}
-            <label for="{{ form.storage.id_for_label }}">Место:</label>
-            {{ form.storage }}
-        </div>
-        <div class="fieldWrapper">
-            {{ form.category.errors }}
-            <label for="{{ form.category.id_for_label }}">Категория:</label>
-            {{ form.category }}
-        </div>
-        <div class="fieldWrapper">
-            {{ form.photos.errors }}
-            <label for="{{ form.photos.id_for_label }}">Фотография:</label>
-            {{ form.photos }}
-        </div>
-        <button type="submit">Сохранить</button>
-    </form>
-{% endblock %}
+    </header>
+    <main>
+        <div class="container">
+            <div class="container-form">
+              <form method="POST" id="form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {{ form.name_of_field.errors }} 
+                {{ field.errors }}
+                <div class="container-form_name">
+                  <label for="first-name">Наименование *</label>
+                  <input  name="name" class="input-name"  type="text" id="id_name" placeholder="Введите наименование">
+                  {{ form.name.errors }}
+                </div>
+                <div class="container-form_category">
+                    <label for="Category">Категория</label>
+                    <div class="form-group-three">
+                        <div class="select-wrapper-three">
+                            <select class="dropdown__button-three" name="category">
+                              {% for cat in form.category %}
+                                  {{cat}}
+                              {% endfor %}
+                            </select>
+                            {{ form.category.errors }}
+                        </div>  
+                    </div>
+                </div>
+
+                <div class="container-form_place">
+                    <label for="last-name">Место хранения</label>
+                    <button class="button-place"><img src="static/assets/images/Add button.svg" alt=""></button>  
+                    <div class="form-group-four">
+                        <div class="select-wrapper-four">
+                            <select class="dropdown__button-four" name="storage">
+                                {% for st in form.storage %}
+                                    {{st}}
+                                {% endfor %}
+                            </select>
+                            {{ form.storage.errors }}
+                        </div>  
+                    </div>
+                </div>
+
+
+                <div class="container-form_description">
+                    <label for="message">Описание</label>
+                    <textarea class="textarea-description" rows="6" id="id_description" name="description"></textarea>
+                    {{ form.description.errors }}
+                </div>
+
+
+                <div class="container-form_photo-enter">
+                  <label for="{{ form.photos.id_for_label }}">Фотографии * </label>
+                  <input type="file" name="photos" multiple="multiple" accept="image/*" required id="id_photos">
+                </div>
+
+                <div class="container-form_button">
+                  <button class="button_send"  type="submit">Сохранить</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+
+          <div class="modal">
+            <div class="modal_main">
+              <img class="modal_close-button" src="static/assets/images/Close_button.svg" alt="close">
+
+              <h2 class="modal_title">Сохранить новую вещь?</h2>
+              <div class="modal_checkbox">              
+                <input class="checkbox_enter" type="checkbox" id="checkbox">
+                <label class="checkbox_label" for="checkbox"></label>
+
+                <h2 class="checkbox_h2">Добавить еще вещь?</h2>
+              </div>
+              <button class="modal_button1">Да</button>
+              <button class="modal_button2">Нет</button>
+            </div>
+          </div>
+
+          <div class="modal-category">
+            <div class="modal_main-category">
+
+              <h2 class="modal_title-category">Добавить новое место хранения</h2>
+              
+              <input class="modal_input" type="text" name="modal-category" placeholder="Название">
+
+
+
+              <button class="modal-category_button1">Отмена</button>
+              <button class="modal-category_button2">Готово</button>
+
+            </div>
+
+          </div>
+
+
+
+
+
+
+    </main>
+
+    <script src="/static/assets/js/main2.js"></script>
+
+
+</body>
+</html>

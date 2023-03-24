@@ -65,15 +65,16 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class ObjUpdateView(LoginRequiredMixin, UpdateView):
-    '''Редактирование вещи'''
-    model = Object
-    template_name = 'object/obj_edit.html'
-    fields = ['name', 'description', 'category', 'storage']
-    success_url = reverse_lazy('home')
+# class ObjUpdateView(LoginRequiredMixin, UpdateView):
+#     '''Редактирование вещи'''
+#     model = Object
+#     template_name = 'object/obj_edit.html'
+#     fields = ['name', 'description', 'category', 'storage']
+#     success_url = reverse_lazy('home')
 
 
 def obj_update_view(request, pk):
+    '''Редактирование вещи'''
     context ={}
     if request.method == 'GET':
         obj = Object.objects.get(id=pk)
@@ -118,16 +119,16 @@ def obj_add(request):
     '''Добавить вещь'''
     if request.method == 'GET':
         form = ObjForm()
-        return render(request, 'object/obj_add.html', {'form': form})
     elif request.method == 'POST':
         form = ObjForm(request.POST, request.FILES)
         if form.is_valid():
-            obj = Object.objects.create(owner=request.user,
-                                        name=form.cleaned_data['name'],
-                                        description=form.cleaned_data['description'],
-                                        category=form.cleaned_data['category'],
-                                        storage=form.cleaned_data['storage'],
-                                        )
+            obj = Object.objects.create(
+                owner=request.user,
+                name=form.cleaned_data['name'],
+                description=form.cleaned_data['description'],
+                category=form.cleaned_data['category'],
+                storage=form.cleaned_data['storage'],
+                )
             for f in request.FILES.getlist('photos'):
                 data = f.read()
                 photo = Picture(obj=obj)
@@ -135,17 +136,19 @@ def obj_add(request):
                 photo.save()
             return redirect('obj_detail', pk=obj.pk)
         else:
-            return render(request, 'object/obj_add.html', {'form': form})
+            form = ObjForm()
+    return render(request, 'object/obj_add.html', {'form': form})
 
 
 def obj_detail(request, pk):
     '''Посмотреть вещь'''
     obj = get_object_or_404(Object, pk=pk)
-    pic = Picture.objects.filter(obj=pk)
+    photos = Picture.objects.filter(obj=pk)
     obj_path = Category.objects.filter(object=obj).get_ancestors(include_self=True)
     return render(request, 'object/obj_detail.html', {
+    # return render(request, 'object/page6.html', {
         'obj': obj, 
-        'pic': pic,
+        'photos': photos,
         'obj_path': obj_path,
         })
 
@@ -169,16 +172,18 @@ class ObjListView(ListView):
     '''Список вещей пользователя'''
     model = Object
     template_name = 'object/obj_list.html'
+    # template_name = 'object/page4.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = ObjFilter(self.request.GET, queryset=Object.objects.filter(owner=self.request.user))
+        print(self.request.GET)
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
         obj_user = Object.objects.filter(owner=self.request.user)
         context = super().get_context_data(**kwargs)
-        context['things'] = FilterForm(self.request.GET, obj_user=obj_user)
+        context['filter'] = FilterForm(self.request.GET, obj_user=obj_user)
         context['photos'] = Picture.objects.filter(obj__in=obj_user)
         context['cat_user'] = Category.objects.filter(object__in=obj_user).distinct().get_ancestors(include_self=True)
         return context
