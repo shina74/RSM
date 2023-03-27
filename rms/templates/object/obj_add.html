@@ -65,13 +65,15 @@
                     <textarea class="textarea-description" rows="6" id="id_description" name="description"></textarea>
                     {{ form.description.errors }}
                 </div>
-
-
                 <div class="container-form_photo-enter">
-                  <label for="{{ form.photos.id_for_label }}">Фотографии * </label>
-                  <input type="file" name="photos" multiple="multiple" accept="image/*" required id="id_photos">
+                  <label>Фотографии * </label>
+                  <label class="volumeFoto">Не более 5</label>
+
+                  <label class="upload-icon11" for="{{ form.photos.id_for_label }}"><img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload"></label>  
+                  <input id="id_photos" type="file" multiple="multiple" name="photos">
                 </div>
 
+                  
                 <div class="container-form_button">
                   <button class="button_send"  type="submit">Сохранить</button>
                 </div>

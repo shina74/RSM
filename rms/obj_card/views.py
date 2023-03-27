@@ -73,7 +73,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
 #     success_url = reverse_lazy('home')
 
 
-def obj_update_view(request, pk):
+def obj_update(request, pk):
     '''Редактирование вещи'''
     context ={}
     if request.method == 'GET':
@@ -111,6 +111,7 @@ def obj_update_view(request, pk):
         return redirect('obj_detail', pk=pk)
 
     context["form"] = form
+    # return render(request, "object/page8.html", context)
     return render(request, "object/obj_edit.html", context)
 
 
@@ -121,7 +122,10 @@ def obj_add(request):
         form = ObjForm()
     elif request.method == 'POST':
         form = ObjForm(request.POST, request.FILES)
+        print(request.POST)
+        print(request.FILES)
         if form.is_valid():
+            print('Form true')
             obj = Object.objects.create(
                 owner=request.user,
                 name=form.cleaned_data['name'],
@@ -136,6 +140,7 @@ def obj_add(request):
                 photo.save()
             return redirect('obj_detail', pk=obj.pk)
         else:
+            print('Form false')
             form = ObjForm()
     return render(request, 'object/obj_add.html', {'form': form})
 
@@ -177,7 +182,6 @@ class ObjListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         self.filterset = ObjFilter(self.request.GET, queryset=Object.objects.filter(owner=self.request.user))
-        print(self.request.GET)
         return self.filterset.qs
 
     def get_context_data(self, **kwargs):
@@ -227,9 +231,12 @@ class ObjPublic(DetailView):
     def get_context_data(self, **kwargs):
         pk=self.kwargs['pk']
         obj = Object.objects.get(pk=pk)
+        photos = Picture.objects.filter(obj=obj)
         context = super().get_context_data(**kwargs)
         context['obj'] = obj
-        context['photos'] = Picture.objects.filter(obj=obj)
+        context['list_photos_count'] = [i for i in range(1, photos.count() + 1)]
+        context['photos'] = photos
+
         return context
 
 

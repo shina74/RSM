@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="/static/assets/css/style2.css">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>New card</title>
@@ -31,38 +31,33 @@
                   <label for="Category">Категория</label>
 
 
-                  <button class="button-form"></button> 
-                    <ul class="dropdown__list-three">
-                        <li class="dropdown__list-item-three" data-value="place1"></li>
-                        <li class="dropdown__list-item-three" data-value="place2"></li>
-                        <li class="dropdown__list-item-three" data-value="place3"></li>
-                        <li class="dropdown__list-item-three" data-value="place4"></li>
-                        <li class="dropdown__list-item-three" data-value="place1"></li>
-                        <li class="dropdown__list-item-three" data-value="place2"></li>
-                        <li class="dropdown__list-item-three" data-value="place3"></li>
-                        <li class="dropdown__list-item-three" data-value="place4"></li>
-                    </ul>
-                    <input type="text" name="select-category" value="" class="dropdown__input-hidden-three">
+                  <div class="form-group-three">
+                    <div class="select-wrapper-three">
+                        <select class="dropdown__button-three">
+                            <option class="dropdown__list-item" data-value="place1">Категория</option>
+                            <option class="dropdown__list-item" data-value="place2"></option>
+                            <option class="dropdown__list-item" data-value="place3"></option>
+                            <option class="dropdown__list-item" data-value="place4"></option>
+                        </select>
+                    </div>  
+                  </div>
 
 
                 </div>
 
                 <div class="container-form_place">
                     <label for="last-name">Место хранения</label>
-
-                    <button class="button-form-four"></button> 
-                    <ul class="dropdown__list-four">
-                        <li class="dropdown__list-item-four" data-value="place1"></li>
-                        <li class="dropdown__list-item-four" data-value="place2"></li>
-                        <li class="dropdown__list-item-four" data-value="place3"></li>
-                        <li class="dropdown__list-item-four" data-value="place4"></li>
-                        <li class="dropdown__list-item-four" data-value="place1"></li>
-                        <li class="dropdown__list-item-four" data-value="place2"></li>
-                        <li class="dropdown__list-item-four" data-value="place3"></li>
-                        <li class="dropdown__list-item-four" data-value="place4"></li>
-                        <button class="dropdown__list-button"> + Добавить место хранения</button> 
-                    </ul>
-                    <input type="text" name="select-category" value="" class="dropdown__input-hidden-four">
+                    <button class="button-place"> <img src="images/Add button.svg" alt=""></button>
+                    <div class="form-group-four">
+                      <div class="select-wrapper-four">
+                          <select class="dropdown__button-four">
+                              <option class="dropdown__list-item" data-value="place1">Место хранения</option>
+                              <option class="dropdown__list-item" data-value="place2"></option>
+                              <option class="dropdown__list-item" data-value="place3"></option>
+                              <option class="dropdown__list-item" data-value="place4"></option>
+                          </select>
+                      </div>  
+                    </div>
 
 
 
@@ -77,10 +72,10 @@
 
                 <div class="container-form_photo">
                   <label>Фотографии * </label>
-                  <label class="upload-icon1" for="file-upload"></label>  
-                  <label class="upload-icon2" for="file-upload"></label> 
-                  <label class="upload-icon3" for="file-upload"></label>  
-                  <label class="upload-icon4" for="file-upload"></label>  
+                  <label class="upload-icon1" for="file-upload"><img class="delete-b" src="images/Close button.svg" alt=""></label>  
+                  <label class="upload-icon2" for="file-upload"><img class="delete-b" src="images/Close button.svg" alt=""></label> 
+                  <label class="upload-icon3" for="file-upload"><img class="delete-b" src="images/Close button.svg" alt=""></label>  
+                  <label class="upload-icon4" for="file-upload"><img class="delete-b" src="images/Close button.svg" alt=""></label>  
                   <label class="upload-icon" for="file-upload"><img id="foto"src="images/image_choose.svg" alt="image upload"></label>  
                   <input id="file-upload" type="file">
                 </div>
@@ -96,12 +91,8 @@
 
             </div>
           </div>
-
-
-
-
-
           </div>
+          
           <div class="modal-category">
             <div class="modal_main-category">
 
