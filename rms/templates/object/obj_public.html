@@ -24,23 +24,13 @@
           <ul class="container-card__list">
             <li class="container-card__list-item4"><h3>{{obj.name}}</h3> </li>
             <li class="container-card__list-item5">
-
+              {% for photo in photos %}
               <h3 class="icon1">
-                
-                <img src="" alt="">
+                {{photo.index}}
+                <img src="{{ photo.image.url }}" width="148px" alt="">
               </h3>
-              <h3 class="icon2">
-                <img src="" alt="">
-              </h3>
-              <h3 class="icon3">
-                <img src="" alt="">
-              </h3>
-              <h3 class="icon4">
-                <img src="" alt="">
-              </h3>
-              <h3 class="icon5">
-                <img src="" alt="">
-              </h3>
+              {% endfor %}
+
           </li>
 
             <li class="container-card__list-item1">Категория <h3>{{obj.category}}</h3> </li>

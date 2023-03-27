@@ -236,7 +236,7 @@ class ObjPublic(DetailView):
         context['obj'] = obj
         context['list_photos_count'] = [i for i in range(1, photos.count() + 1)]
         context['photos'] = photos
-
+        
         return context
 
 
