@@ -185,7 +185,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True   # будет ли адрес электр�
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 5   # ...дней на подтверждение почты
 # ACCOUNT_SIGNUP_REDIRECT_URL = 'accounts/confirm-email/'
 LOGIN_REDIRECT_URL = '/obj_list/'
-LOGIN_URL = 'accounts/login/'
+LOGIN_URL = '/accounts/login/'
 
 # Переопределяем формы allauth
 ACCOUNT_FORMS = {
