@@ -93,7 +93,7 @@ const modalDelete = () => {
   const closeModal = event => {
     const target = $(event.target);
 
-    if (target.is(modalCategoryElem) || target.closest('.modal-category_button1').length > 0) {
+    if (target.is(modalCategoryElem) || target.closest('.modal-category_button1, .modal-delete_button2').length > 0) {
       modalCategoryElem.css('opacity', '0');
 
       setTimeout(() => {
@@ -124,6 +124,10 @@ modalDelete();
 
 
 
+/*const tr = document.querySelector('tr');
+tr.addEventListener('click', () => {
+  location.href = "";
+});*/
 
 
 

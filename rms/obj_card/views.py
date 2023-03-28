@@ -170,7 +170,7 @@ class ObjDeleteView(LoginRequiredMixin, DeleteView):
     '''Удалить вещь'''
     model = Object
     template_name = 'object/obj_delete.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('obj_list')
 
 
 class ObjListView(LoginRequiredMixin, ListView):
