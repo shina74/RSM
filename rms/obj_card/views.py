@@ -32,7 +32,7 @@ class AccountIndex(LoginRequiredMixin, TemplateView):
         return context
 
 
-# @login_required
+@login_required
 def index(request):
     '''Главная страница'''
     data = 'Сайт'
@@ -72,7 +72,7 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
 #     fields = ['name', 'description', 'category', 'storage']
 #     success_url = reverse_lazy('home')
 
-
+@login_required
 def obj_update(request, pk):
     '''Редактирование вещи'''
     context ={}
@@ -144,7 +144,7 @@ def obj_add(request):
             form = ObjForm()
     return render(request, 'object/obj_add.html', {'form': form})
 
-
+@login_required
 def obj_detail(request, pk):
     '''Посмотреть вещь'''
     obj = get_object_or_404(Object, pk=pk)
@@ -157,7 +157,7 @@ def obj_detail(request, pk):
         'obj_path': obj_path,
         })
 
-
+@login_required
 def pic_del(request, pk):
     '''Удалить фото'''
     pic = Picture.objects.get(id=pk)
@@ -173,7 +173,7 @@ class ObjDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('home')
 
 
-class ObjListView(ListView):
+class ObjListView(LoginRequiredMixin, ListView):
     '''Список вещей пользователя'''
     model = Object
     template_name = 'object/obj_list.html'
@@ -193,6 +193,7 @@ class ObjListView(ListView):
         return context
 
 
+@login_required
 def add_pic(request, pk):
     '''Кнопка добавления картинки'''
     if request.method == 'POST':
