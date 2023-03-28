@@ -164,115 +164,15 @@ body {
     gap: 155px;
 }
 
-h3 {
-  margin-top: 0px;
-}
-
-/* modal shering window page 4 */
-
-
-.modal-shering {
-  position: fixed;
-  inset: 0;
-  visibility: hidden;
-  margin: auto;
-
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  
-
-}
-
-
-.modal-shering--hidden {
-  visibility: hidden;
-}
-
-.modal-shering--visible {
-  visibility: visible;
-
-}
-
-
-
-.modal_main-shering {
-  position: relative;
-
-  width: 625px;
-  height: 142px;
-  margin: auto;
-  color: #000000;
-
-  background: #FFFFFF;
-
-
-
-} 
-
-
-
-
-
-
-
-
-.shering_input {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  width: 500px;
-  height: 60px;
-  padding-left: 20px;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 150%;
-  /* identical to box height, or 27px */
-
-  /* Dark Grey */
-  color: black;
-
-  box-sizing: border-box;
-  border: 1px solid #8D8D8D;
-  border-radius: 10px;
-}
-
-
-.shering-frame {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  left: 550px;
-  top: 55px;
-  cursor: pointer;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .main__container-button {
     padding: 20px;
     gap: 10px;
 
     position: absolute;
-    width: 320px;
+    width: 500px;
     height: 60px;
     left: 65px;
-    top: 876px;
+    top: 869px;
 
     /* Grey */
     background: #F0F0F0;
@@ -297,84 +197,6 @@ h3 {
 
 }
 
-
-.main__container-button1 {
-
-
-    position: absolute;
-    width: 320px;
-    height: 60px;
-    left: 415px;
-    top: 876px;
-
-    /* White */
-    background: #FFFFFF;
-    /* Dark Grey */
-    border: 1px solid #8D8D8D;
-    border-radius: 10px;
-
-        /* Main text */
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 150%;
-    /* identical to box height, or 27px */
-
-    /* Black */
-    color: #000000;
-}
-
-
-.main__container-button2 {
-  position: absolute;
-  width: 320px;
-  height: 60px;
-  left: 765px;
-  top: 876px;
-
-  /* White */
-  background: #FFFFFF;
-  /* Dark Grey */
-  border: 1px solid #8D8D8D;
-  border-radius: 10px;
-
-  /* Main text */
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 150%;
-  /* identical to box height, or 27px */
-
-  /* Black */
-  color: #000000;
-
-
-
-}
-
-
-.main__container-button2:hover {
-    border: 1px solid #000000;
-    border-radius: 10px;
-}
-
-.main__container-button1:hover {
-    border: 1px solid #000000;
-    border-radius: 10px;
-}
-
-
-
-
-
-
-
-
-
-
-
 .main__container-button:hover {
     background: #F0F0F0;
     border: 1px solid #000000;
@@ -395,17 +217,6 @@ h3 {
     color: #FFFFFF;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .main__container-button-enter {
     padding: 22px 30px 24px;
     gap: 10px;
@@ -414,7 +225,7 @@ h3 {
     width: 107px;
     height: 60px;
     left: 611px;
-    top: 875px;
+    top: 869px;
     background: white;
 
     /* Dark Grey */
@@ -448,129 +259,6 @@ h3 {
     right: 80px;
     top: 65.94px;
 }
-
-
-/* modal window delete page 8 */
-
-
-
-.modal-delete {
-  position: fixed;
-  inset: 0;
-  visibility: hidden;
- 
-
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-
-}
-
-.modal_main-delete {
-  position: relative;
-  margin: auto;
-  width: 720px;
-  height: 289px;
-  margin: auto;
-  color: #000000;
-
-  background: #FFFFFF;
-
-
-} 
-
-.modal_title-delete {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 150%;
- 
-
-  color: #000000;
-  position: absolute;
-  left: 80px;
-  top: 80px;
-}
-
-
-
-
-
-.modal-delete_button2 {
-  position: absolute;
-  width: 90px;
-  height: 60px;
-  left: 547px;
-  top: 169px;
-
-  border: none;
-
-
-
-  background: #F0F0F0;
-  border-radius: 10px;
-  cursor: pointer;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-
-
-  color: #000000;
-
-}
-
-.modal-delete_button1 {
-
-  position: absolute;
-  width: 82px;
-  height: 60px;
-  left: 417px;
-  top: 169px;
-
-  border: none;
-  background: white;
-    
-  box-sizing: border-box;
-  border: 1px solid #8D8D8D;
-  border-radius: 10px;
-  cursor: pointer;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-
-
-  color: #000000;
-}
-
-
-
-.modal-delete_button1:hover {
-  border: 1px solid #000000;
-  border-radius: 10px;
-}
-
-.modal-delete_button2:hover {
-  border: 1px solid #000000;
-  border-radius: 10px;
-}
-
-
-.modal-delete_button2:active{
-  background: #8D8D8D;
-  border-radius: 10px;
-  color: #FFFFFF;
-}
-
-
-
-
-
 
 
 @media only screen and (max-width: 767px) {
@@ -632,18 +320,6 @@ h3 {
     }
   }
 
-
-
-
-
-  .icon1, .icon2, .icon3, .icon4, .icon5  {
-    width: 150px;
-    height: 150px;
-    border: 1px solid #8D8D8D;
-    border-radius: 10px;
-    box-sizing: border-box;
-
-  }
 
 
 
@@ -870,18 +546,6 @@ h3 {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   @media (max-width: 360px) {
 
     .google_img {
@@ -980,3 +644,118 @@ h3 {
 
 
   }
+
+  .main__container-button2 {
+    position: absolute;
+    width: 320px;
+    height: 60px;
+    left: 765px;
+    top: 876px;
+  
+    /* White */
+    background: #FFFFFF;
+    /* Dark Grey */
+    border: 1px solid #8D8D8D;
+    border-radius: 10px;
+  
+    /* Main text */
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    /* identical to box height, or 27px */
+  
+    /* Black */
+    color: #000000;
+  
+  
+  
+  }
+  .main__container-button1 {
+
+
+    position: absolute;
+    width: 320px;
+    height: 60px;
+    left: 415px;
+    top: 876px;
+
+    /* White */
+    background: #FFFFFF;
+    /* Dark Grey */
+    border: 1px solid #8D8D8D;
+    border-radius: 10px;
+
+        /* Main text */
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 150%;
+    /* identical to box height, or 27px */
+
+    /* Black */
+    color: #000000;
+}
+
+.main__container-button2:hover {
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+
+.main__container-button1:hover {
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+.main__container-button:hover {
+  background: #F0F0F0;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+
+.main__container-button:active {
+  background: #8D8D8D;
+  border-radius: 10px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 150%;
+  /* identical to box height, or 27px */
+
+  /* White */
+  color: #FFFFFF;
+}
+.main__container-button {
+  padding: 20px;
+  gap: 10px;
+
+  position: absolute;
+  width: 320px;
+  height: 60px;
+  left: 65px;
+  top: 876px;
+
+  /* Grey */
+  background: #F0F0F0;
+  border-radius: 10px;
+  border: 0;
+  font-family: 'Inter';
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 150%;
+  /* identical to box height, or 27px */
+
+  /* Black */
+  color: #000000;
+
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+}

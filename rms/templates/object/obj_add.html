@@ -46,7 +46,7 @@
 
                 <div class="container-form_place">
                     <label for="last-name">Место хранения</label>
-                    <button class="button-place"><img src="static/assets/images/Add button.svg" alt=""></button>  
+                    
                     <div class="form-group-four">
                         <div class="select-wrapper-four">
                             <select class="dropdown__button-four" name="storage">
@@ -62,14 +62,21 @@
 
                 <div class="container-form_description">
                     <label for="message">Описание</label>
-                    <textarea class="textarea-description" rows="6" id="id_description" name="description"></textarea>
+                    
+                    <div class="textarea-description">
+                      <input class="input-description" type="text" placeholder="" id="id_description" name="description">
+                    </div>
                     {{ form.description.errors }}
                 </div>
                 <div class="container-form_photo-enter">
                   <label>Фотографии * </label>
                   <label class="volumeFoto">Не более 5</label>
 
-                  <label class="upload-icon11" for="{{ form.photos.id_for_label }}"><img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload"></label>  
+                  <label class="upload-icon" for="file-upload">
+                    </label>  
+                  <label class="upload-icon" for="{{ form.photos.id_for_label }}">
+                    <img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload">
+                  </label>  
                   <input id="id_photos" type="file" multiple="multiple" name="photos">
                 </div>
 

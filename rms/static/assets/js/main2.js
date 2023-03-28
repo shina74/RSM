@@ -6,7 +6,7 @@
 /* pop up  on button save thing page five */
 
 
-const modalController = () => {
+/*const modalController = () => {
   const buttonElem = $('.button_send');
   const modalElem = $('.modal');
 
@@ -39,7 +39,7 @@ const modalController = () => {
   buttonElem.on('click', openModal);
 };
 
-modalController();
+modalController();*/
 
 
 
@@ -47,7 +47,7 @@ modalController();
 /* pop up make place page five */
 
 const modalSaveController = () => {
-  let listButtonElem = $('.button-place');
+  let listButtonElem = $('.button_send-delete');
   let modalCategoryElem = $('.modal-category');
 
   modalCategoryElem.css({
@@ -96,7 +96,7 @@ modalSaveController();
 
 
 
-const modalDelete = () => {
+/*const modalDelete = () => {
   let listButtonElem = $('.button_send-delete');
   let modalCategoryElem = $('.modal-delete');
 
@@ -110,7 +110,7 @@ const modalDelete = () => {
   const closeModal = event => {
     const target = $(event.target);
 
-    if (target.is(modalCategoryElem) || target.closest('.modal-category_button1').length > 0) {
+    if (target.is(modalCategoryElem) || target.closest('.modal-category_button2').length > 0) {
       modalCategoryElem.css('opacity', '0');
 
       setTimeout(() => {
@@ -119,7 +119,17 @@ const modalDelete = () => {
 
       $(window).off('keydown', closeModal);
     }
-  }
+  };
+
+  const closeModalFromButton = () => {
+    modalCategoryElem.css('opacity', '0');
+
+    setTimeout(() => {
+      modalCategoryElem.css('visibility', 'hidden');
+    }, 300);
+
+    $(window).off('keydown', closeModal);
+  };
 
   let openModal = () => {
     modalCategoryElem.css({
@@ -131,8 +141,11 @@ const modalDelete = () => {
   modalCategoryElem.on('click', closeModal);
 
   listButtonElem.on('click', openModal);
+
+  $('.modal-delete_button2').on('click', closeModalFromButton);
 };
 
-modalDelete();
+modalDelete()*/
+
 
 

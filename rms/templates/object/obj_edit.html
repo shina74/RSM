@@ -39,11 +39,10 @@
                             </div>  
                         </div>
                     </div>
-
+<!-- 0 -->
                     <div class="container-form_place">
                         <label for="last-name">Место хранения</label>
-                        <button class="button-place"> <img src="/static/assets/images/Add button.svg" alt=""></button>
-                        <div class="form-group-four">
+                          <div class="form-group-four">
                             <div class="select-wrapper-four">
                                 <select class="dropdown__button-four" name="storage" required id="id_storage">
                                     {% for stor in form.storage %}
@@ -55,33 +54,46 @@
                     </div>
 
 
+
                     <div class="container-form_description">
                     <label for="id_description">Описание</label>
-                    <input class="input-name"  type="text" id="id_description" name="description" value="{{form.description.value}}" placeholder="Описание">
+                    <div class="textarea-description">
+                        <input class="input-description"  type="text" id="id_description" name="description" value="{{form.description.value}}" placeholder="Описание">
+                      </div>
+                    
                     </div>
 
 
-                    <div class="container-form_photo">
-                        <label>Фотографии * </label>
-                        
-                        {% for photo in photos %}
-                        <h3 class="icon1">
-                            <img src="{{ photo.image.url }}" width="148px">
-                            <a href="{% url  'photo_delete' photo.id %}">Удалить фото</a>
-                        </h3> 
-                        {% endfor %}
-                        <label class="upload-icon" for="id_photos">
-                            <img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload">
-                        </label>
-                        <input type="file" name="photos" multiple="multiple" accept="image/*" id="id_photos">
-                    </div>
+<!-- 0 -->
+<div class="container-form_photo">
+    <label>Фотографии * </label>
+    <label class="volumeFoto">Не более 5</label>
 
+    <li class="container-card__list-item">
+        {% for photo in photos %}
+        <h3 class="icon1">
+            <a href="{% url  'photo_delete' photo.id %}">
+                <img class="delete-b" src="/static/assets/images/Close button.svg" alt="">
+            </a>
+            <img src="{{ photo.image.url }}" width="148px">
+        </h3>
+        {% endfor %}
+    </li>
+    
+    <label class="upload-icon" for="id_photos">
+        <img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload">
+    </label>  
+    <input type="file" name="photos" multiple="multiple" accept="image/*" id="id_photos">
+  </div>
+<!-- 0 -->
                     <div class="container-form_button">
                     <button class="button_send"  type="submit">Сохранить</button>
                     </div>
                 </form>
                     <div class="container-form_button-delete">
-                        <a href="{% url 'storage_create' %}"><button class="button_send-delete"  type="submit">Добавить новое место хранения</button></a>
+                        
+                            <button class="button_send-delete"  type="submit">Добавить новое место хранения</button>
+                        
                     </div>
             </div>
           </div>
@@ -91,9 +103,12 @@
             <div class="modal_main-category">
 
               <h2 class="modal_title-category">Добавить новое место хранения</h2>
-              <input class="modal_input" type="text" name="modal-category" placeholder="Название">
+              <form action="{%url 'storage_create'%}" method="post">
+                {% csrf_token %}
+                <input class="modal_input" id="id_name" type="text" name="name" placeholder="Название">
+                <button class="modal-category_button2">Готово</button>
+              </form>
               <button class="modal-category_button1">Отмена</button>
-              <button class="modal-category_button2">Готово</button>
             </div>
           </div>
     </main>
