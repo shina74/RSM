@@ -672,7 +672,7 @@ border-radius: 10px;
 
 /* for phone */
 
-@media (max-width: 360px) {
+@media (max-width: 760px) {
 
     body {
         width: 360;
