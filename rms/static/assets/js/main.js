@@ -47,7 +47,7 @@ const modalShering = () => {
   modalCategoryElem.on('click', '.shering-frame', () => {
     sheringInput.select();
     document.execCommand('copy');
-
+    closeModal(); 
 
   });
 };
