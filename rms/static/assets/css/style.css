@@ -755,6 +755,11 @@ border-radius: 10px;
 
     /* page 2 */
 
+    body {
+        width: 360;
+        position: relative;
+    }
+
     .login-form{
         position: absolute;
         top: 0px;
@@ -795,8 +800,17 @@ border-radius: 10px;
     }
 
     .signin-form {
-        top: 450px;
+        top: 550px;
         left: 10px;
+        width: 320px;
+        height: 200px;
+
+    }
+
+    .signin-form_social {
+        width: 320px;
+        height: 200px;
+
     }
 
     .signin-form_social_googlebutton {
@@ -826,6 +840,10 @@ border-radius: 10px;
 
     div h2:first-of-type {
         margin-top: 290px;
+    }
+
+    .form-middle{
+        top: 50px;
     }
 
     .form-middle_line1 {
