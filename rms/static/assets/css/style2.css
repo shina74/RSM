@@ -1722,7 +1722,21 @@ border-radius: 10px 0 0px 10px
 
 
 
+.table_h2 {
+position: absolute;
+top: 500px;
+left: 580px;
 
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 400;
+font-size: 26px;
+line-height: 150%;
+/* identical to box height, or 39px */
+
+color: #000000;
+}
 
 
 

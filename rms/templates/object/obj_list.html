@@ -14,9 +14,9 @@
         <a href="{% url 'obj_add' %}"><button class="header-button">+ Добавить вещь</button></a>
 
         <div class="search-form"> 
-			<form method="GET" action="{% url 'search' %}">
+			<form method="GET" >
 				<input type="text" name="q" class="search-txt" placeholder="Поиск">
-				<button class="search-form_button" ><img class="search-form_img" src="/static/assets/images/Search.svg" alt="image"></button>
+				<img class="search-form_img" src="/static/assets/images/Search.svg" alt="image">
 			</form>
         </div>
         <div class="exit">
@@ -69,7 +69,7 @@
             </div>
         
 		{% else %}
-		<!-- <p>У вас нет вещей</p> -->
+		<h2 class="table_h2">У вас нет вещей</h2>
 		{% endif %}
         
 

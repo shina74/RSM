@@ -95,3 +95,4 @@ class NewSignupForm(SignupForm):
 
         return cleaned_data
 
+
