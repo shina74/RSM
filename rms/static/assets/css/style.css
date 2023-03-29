@@ -403,7 +403,7 @@ label::before {
 input[type="checkbox"]:checked + label::before {
     content: '';
     background-size: 33.5px;
-    background-image: url(/static/assets/images/Vector_1.svg);
+    background-image: url(images/Vector\ 1.svg);
    
 }
 
@@ -660,6 +660,12 @@ input[type="checkbox"]:checked + label::before {
 border: 1px solid #000000;
 border-radius: 10px;
 }
+
+
+
+
+
+
 
 
 
