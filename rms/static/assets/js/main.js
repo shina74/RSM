@@ -129,7 +129,13 @@ tr.addEventListener('click', () => {
   location.href = "";
 });*/
 
+const frame = document.querySelector('.shering-frame');
+const input = document.querySelector('.shering_input');
 
+frame.addEventListener('click', () => {
+  input.select();
+  document.execCommand('copy');
+});
 
 
   

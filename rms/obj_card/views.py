@@ -288,7 +288,7 @@ class StorageCreate(LoginRequiredMixin, CreateView):
     model = Storage
     template_name = 'object/storage_create.html'
     fields = ['name']
-    success_url = reverse_lazy('obl_list')
+    success_url = reverse_lazy('obj_list')
 
     def form_valid(self, form):
         print(self)
