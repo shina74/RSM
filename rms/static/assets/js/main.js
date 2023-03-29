@@ -9,6 +9,7 @@
 const modalShering = () => {
   let listButtonElem = $('.main__container-button2');
   let modalCategoryElem = $('.modal-shering');
+  let sheringInput = $('.shering_input');
 
   modalCategoryElem.css({
     'display': 'flex',
@@ -41,9 +42,18 @@ const modalShering = () => {
   modalCategoryElem.on('click', closeModal);
 
   listButtonElem.on('click', openModal);
+
+
+  modalCategoryElem.on('click', '.shering-frame', () => {
+    sheringInput.select();
+    document.execCommand('copy');
+
+
+  });
 };
 
 modalShering();
+
 
 
 
@@ -129,13 +139,7 @@ tr.addEventListener('click', () => {
   location.href = "";
 });*/
 
-const frame = document.querySelector('.shering-frame');
-const input = document.querySelector('.shering_input');
 
-frame.addEventListener('click', () => {
-  input.select();
-  document.execCommand('copy');
-});
 
 
   
