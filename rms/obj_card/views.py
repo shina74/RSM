@@ -32,7 +32,6 @@ class AccountIndex(LoginRequiredMixin, TemplateView):
         return context
 
 
-@login_required
 def index(request):
     '''Главная страница'''
     data = 'Сайт'

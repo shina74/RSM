@@ -21,7 +21,7 @@
 
 <body>
     <div class="form_container">
-        <a href="page1.html" class="back_button"><img src="/static/assets/images/Arrows_button.svg" alt="Back button"></a>
+        <a href="{% url 'home' %}" class="back_button"><img src="/static/assets/images/Arrows_button.svg" alt="Back button"></a>
         
         <div class="login-form">
             <div class="login-form_profile">
@@ -30,12 +30,12 @@
                   {% csrf_token %}
                   {{ form.name_of_field.errors }}
                     <div class="input-control input-control_wrp">
-                        <input id="id_email" class="input_style" type="email" name="login" autocomplete="email" required>
+                        <input id="id_email" class="input_style" type="email" name="login" autocomplete="email" required value="admin@admin.ru">
                         <span class="floating-label">E-mail</span>
                         <div class="error" id="error_login">{{ form.email.errors }}</div>
                     </div>
                     <div class="input-control input-control_wrp">
-                        <input id="id_password" class="input_style" type="password" name="password" required>
+                        <input id="id_password" class="input_style" type="password" name="password" required value="1234">
                         <span class="floating-label">Пароль</span>
                         <div class="error" id="error_password">
                           {{ form.password.errors }}
@@ -44,6 +44,7 @@
                           {% endfor %}
                         </div>
                     </div>
+
                     {% if redirect_field_value %}
                     <input type="checkbox" id="checkbox" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
                     {% endif %}
