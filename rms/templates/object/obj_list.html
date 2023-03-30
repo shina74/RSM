@@ -59,7 +59,12 @@
                 </tr>
                 {% for thing in object_list %}
                 <tr>
-                    <td><a href="{% url 'obj_detail' thing.id %}">{{thing.name}}</a></td>
+                    <td>
+                        <a href="{% url 'obj_detail' thing.id %}">
+                            
+                            {{thing.name}}
+                        </a>
+                    </td>
                     <td>{{thing.storage}}</td>
                     <td>{{thing.category}}</td>
                     <td>{{thing.created|date:'d M Y'}}</td>

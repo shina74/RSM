@@ -133,7 +133,7 @@ flex-direction: row;
 
 .container-card__list-item1 {
   position: absolute;
-  width: 160px;
+  /*width: 160px;*/
   height: 27px;
   left: 65px;
   top: 515px;
@@ -144,7 +144,7 @@ flex-direction: row;
 
 .container-card__list-item2 {
   position: absolute;
-  width: 370px;
+  /*width: 370px;*/
   height: 27px;
   left: 65px;
   top: 622px;
@@ -155,13 +155,13 @@ flex-direction: row;
 
 .container-card__list-item3 {
   position: absolute;
-  width: 160px;
+  /*width: 160px;*/
   height: 27px;
   left: 65px;
   top: 742px;
   display: flex;
   flex-direction: row;
-  gap: 155px;
+  gap: 145px;
 }
 
 h3 {
@@ -207,7 +207,7 @@ background: #FFFFFF;
 
 
 
-} 
+}
 
 
 
@@ -476,7 +476,7 @@ color: #000000;
 background: #FFFFFF;
 
 
-} 
+}
 
 .modal_title-delete {
 font-family: 'Inter';
@@ -532,7 +532,7 @@ top: 169px;
 
 border: none;
 background: white;
-  
+
 box-sizing: border-box;
 border: 1px solid #8D8D8D;
 border-radius: 10px;
@@ -771,7 +771,7 @@ color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
 
 
   /* identical to box height, or 27px */
@@ -1003,7 +1003,7 @@ color: #000000;
 background: #FFFFFF;
 
 
-} 
+}
 
 .modal_title-delete {
 font-family: 'Inter';
@@ -1057,7 +1057,7 @@ top: 169px;
 
 border: none;
 background: white;
-  
+
 box-sizing: border-box;
 border: 1px solid #8D8D8D;
 border-radius: 10px;
@@ -1130,7 +1130,7 @@ color: #FFFFFF;
     left: 20px;
     top: 442px;
   }
-  
+
 
 
   .yandex_img {
@@ -1195,7 +1195,7 @@ color: #FFFFFF;
   .arrows-button {
     top: 5px;
     left: 20px;
-    
+
   }
   .header-newCard {
     background: white;
@@ -1295,6 +1295,27 @@ color: #FFFFFF;
   left: 277px;
   top: 214px;
  }
+
+ .modal_main-delete {
+     left:-450px;
+     top:-250px;
+     width:400px;
+ }
+
+ .modal-delete_button1 {
+     left:200px;
+
+ }
+
+  .modal-delete_button2 {
+     left:300px;
+
+ }
+
+  .modal_main-shering {
+    left: -400px;
+    top: -300px;
+  }
 
 
 

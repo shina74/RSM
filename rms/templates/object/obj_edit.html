@@ -59,35 +59,35 @@
                     <label for="id_description">Описание</label>
                     <div class="textarea-description">
                         <input class="input-description"  type="text" id="id_description" name="description" value="{{form.description.value}}" placeholder="Описание">
-                      </div>
+                    </div>
                     
                     </div>
 
 
 <!-- 0 -->
-<div class="container-form_photo">
-    <label>Фотографии * </label>
-    <label class="volumeFoto">Не более 5</label>
+                    <div class="container-form_photo">
+                        <label>Фотографии * </label>
+                        <label class="volumeFoto">Не более 5</label>
 
-    <li class="container-card__list-item">
-        {% for photo in photos %}
-        <h3 class="icon1">
-            <a href="{% url  'photo_delete' photo.id %}">
-                <img class="delete-b" src="/static/assets/images/Close button.svg" alt="">
-            </a>
-            <img src="{{ photo.image.url }}" width="148px">
-        </h3>
-        {% endfor %}
-    </li>
-    
-    <label class="upload-icon" for="id_photos">
-        <img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload">
-    </label>  
-    <input type="file" name="photos" multiple="multiple" accept="image/*" id="id_photos">
-  </div>
+                        <li class="container-card__list-item">
+                            {% for photo in photos %}
+                            <h3 class="icon1">
+                                <a href="{% url  'photo_delete' photo.id %}">
+                                    <img class="delete-b" src="/static/assets/images/Close button.svg" alt="">
+                                </a>
+                                <img src="{{ photo.image.url }}" width="148px">
+                            </h3>
+                            {% endfor %}
+                        </li>
+                        
+                        <label class="upload-icon" for="id_photos">
+                            <img id="foto"src="/static/assets/images/image_choose.svg" alt="image upload">
+                        </label>  
+                        <input type="file" name="photos" multiple="multiple" accept="image/*" id="id_photos">
+                    </div>
 <!-- 0 -->
                     <div class="container-form_button">
-                    <button class="button_send"  type="submit">Сохранить</button>
+                        <button class="button_send"  type="submit">Сохранить</button>
                     </div>
                 </form>
                     <div class="container-form_button-delete">

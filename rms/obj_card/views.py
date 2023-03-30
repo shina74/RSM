@@ -150,7 +150,6 @@ def obj_detail(request, pk):
     photos = Picture.objects.filter(obj=pk)
     obj_path = Category.objects.filter(object=obj).get_ancestors(include_self=True)
     return render(request, 'object/obj_detail.html', {
-    # return render(request, 'object/page6.html', {
         'obj': obj, 
         'photos': photos,
         'obj_path': obj_path,
