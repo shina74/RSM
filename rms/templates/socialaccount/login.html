@@ -19,16 +19,15 @@
 
     <main>
         <div>
-          {{provider.name}}
           {% if provider.name == "VK" %}
             <img class="vkontakte_img" src="/static/assets/images/vkontakte_logo.svg" alt="vkontakte">
             <h2 class="vkontakte-h2"> Для продолжения вы будете <br> перенаправлены в аккаунт Вконтакте </h2>
           {% elif provider.name == "Yandex" %}
-          <img class="yandex_img" src="/static/assets/images/yandex_logo.svg" alt="yandex">
-          <h2 class="yandex-h2"> Для продолжения вы будете <br> перенаправлены в аккаунт  Яндекс.Почты </h2>
+            <img class="yandex_img" src="/static/assets/images/yandex_logo.svg" alt="yandex">
+            <h2 class="yandex-h2"> Для продолжения вы будете <br> перенаправлены в аккаунт  Яндекс.Почты </h2>
           {% elif provider.name == "Google" %}
-          <img class="google_img" src="/static/assets/images/google_logo.svg" alt="google">
-          <h2 class="google-h2">Для продолжения вы будете <br> перенаправлены в аккаунт Google </h2>
+            <img class="google_img" src="/static/assets/images/google_logo.svg" alt="google">
+            <h2 class="google-h2">Для продолжения вы будете <br> перенаправлены в аккаунт Google </h2>
           {% endif %}
             <form method="post">
               {% csrf_token %}
