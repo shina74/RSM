@@ -94,7 +94,7 @@
               <h2 class="modal_title-category">Добавить новое место хранения</h2>
               <form action="{%url 'storage_create'%}" method="post">
                 {% csrf_token %}
-                <input class="modal_input" id="id_name" type="text" name="name" placeholder="Название">
+                <input class="modal_input" id="id_name" type="text" name="name" placeholder="Название" required>
                 <button class="modal-category_button2">Готово</button>
               </form>
               <button class="modal-category_button1">Отмена</button>
