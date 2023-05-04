@@ -7,6 +7,7 @@ from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.sites.models import Site
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.files.base import ContentFile
 from django.urls import reverse_lazy
@@ -17,7 +18,7 @@ from mptt.forms import MoveNodeForm, TreeNodeChoiceField
 from . import serializers
 from .permisisions import IsOwnerOrReadOnly
 from .models import Object, Picture, Category, Storage
-from .forms import ObjForm, PicForm, FilterForm, ObjUpdateForm
+from .forms import ObjForm, PicForm, FilterForm, ObjUpdateForm, StorageForm
 from .filters import ObjFilter
 
 
@@ -64,13 +65,6 @@ class CategoryDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-# class ObjUpdateView(LoginRequiredMixin, UpdateView):
-#     '''Редактирование вещи'''
-#     model = Object
-#     template_name = 'object/obj_edit.html'
-#     fields = ['name', 'description', 'category', 'storage']
-#     success_url = reverse_lazy('home')
-
 @login_required
 def obj_update(request, pk):
     '''Редактирование вещи'''
@@ -90,17 +84,15 @@ def obj_update(request, pk):
 
     elif request.method == 'POST':
         form = ObjUpdateForm(request.POST, request.FILES)
-        print('post', form.is_valid())
-        print(request.POST)
         if form.is_valid():
             print('valid')
             obj = Object.objects.filter(id=pk).update(
-            name = form.cleaned_data['name'],
-            description = form.cleaned_data['description'],
-            category = form.cleaned_data['category'],
-            storage = form.cleaned_data['storage'],
-            )
-            print('request.FILES', request.FILES)
+                name = form.cleaned_data['name'],
+                description = form.cleaned_data['description'],
+                category = form.cleaned_data['category'],
+                storage = form.cleaned_data['storage'],
+                )
+
             if request.FILES:
                 for file in request.FILES.getlist('photos'):
                     data = file.read()
@@ -110,6 +102,7 @@ def obj_update(request, pk):
         return redirect('obj_detail', pk=pk)
 
     context["form"] = form
+    context['pk_obj'] = obj.pk
     # return render(request, "object/page8.html", context)
     return render(request, "object/obj_edit.html", context)
 
@@ -143,17 +136,23 @@ def obj_add(request):
             form = ObjForm()
     return render(request, 'object/obj_add.html', {'form': form})
 
+
 @login_required
 def obj_detail(request, pk):
     '''Посмотреть вещь'''
     obj = get_object_or_404(Object, pk=pk)
     photos = Picture.objects.filter(obj=pk)
-    obj_path = Category.objects.filter(object=obj).get_ancestors(include_self=True)
+    obj_path = Category.objects.filter(object=obj).get_ancestors(include_self=True)   # хлебные крошки
+    domain = Site.objects.get_current().domain
+    public_link = f'http://{domain}/public_link/{pk}'
+    print(public_link)
     return render(request, 'object/obj_detail.html', {
         'obj': obj, 
         'photos': photos,
         'obj_path': obj_path,
+        'public_link': public_link,
         })
+
 
 @login_required
 def pic_del(request, pk):
@@ -291,12 +290,61 @@ class StorageCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         print(self)
+        print(self.request.POST)
+
         storage = form.save(commit=False)
         storage.user = self.request.user
         return super().form_valid(form)
 
+@login_required
+def storage_add(request):
+    '''Добавить место хранения'''
+    if request.method == 'GET':
+        form = StorageForm()
+    elif request.method == 'POST':
+        form = StorageForm(request.POST)
+        if form.is_valid():
+            print('Form true')
+            Storage.objects.create(
+                name=form.cleaned_data['name'],
+                user=request.user,
+                )
+            if request.POST.get('obj_edit'):
+                return redirect('obj_edit', pk=int(request.POST['pk_obj']))
+            else:
+                return redirect('obj_add')
+        else:
+            print('Form false')
+            form = StorageForm()
+    return render(request, 'object/storage_create.html', {'form': form})
+
 
 '''Дальше идёт код для загрузки БД. После заливки удалить'''
+
+def load_cat(request):
+    '''
+    Выгружаем из json файла и записываем в базу
+    После выгрузки, удалить дубли названий.
+    
+    '''
+    print(os.getcwd ())
+    loads = ''
+    with open('./category-dom.json', 'r', encoding='utf-8') as f:
+        loads = f.read()
+    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
+
+    for key, value in cat_dict.items():
+        print(key, '/', value[1], '/', value[0])
+        Category.objects.create(
+            name= value[0], 
+            id_old=key, 
+            id_parent_old=value[1]
+            )
+
+    data = Category.objects.all()
+    print("Позиций в базе:", data.count())
+    return render(request, "object/category_load.html", {'data': data})
+
 
 def set_parent(request):   # заполняем parent
     categoties = Category.objects.all()
@@ -305,32 +353,33 @@ def set_parent(request):   # заполняем parent
             id_parent = Category.objects.get(id_old=cat.id_parent_old)
             cat.parent = id_parent
             cat.save()
-            print(cat.id, cat.name, cat.id_old, cat.id_parent_old, )
+            cat.refresh_from_db()
+            print(cat.id, cat.name, cat.id_old, cat.id_parent_old, ':', cat.parent)
         except:
             print('Нет объекта с id_old', cat.id_parent_old, (cat.name))
     data = Category.objects.all()
-    return render(request, "object/index.html", {'data': data})
+    print(data.count())
+    return render(request, "object/category_parent.html", {'data': data})
 
 
-def load_cat(request):   # выгружаем из json файла и записываем в базу
-    print(os.getcwd ())
-    loads = ''
-    with open('./category-lv-new.json', 'r', encoding='utf-8') as f:
-        loads = f.read()
-    cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
+# def load_cat(request):   # выгружаем из json файла и записываем в базу
+#     print(os.getcwd ())
+#     loads = ''
+#     with open('./category-dom.json', 'r', encoding='utf-8') as f:
+#         loads = f.read()
+#     cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
 
-    for cat in cat_dict:
-        print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
-        Category.objects.create(
-            name=cat_dict[cat][0], 
-            id_old=cat, 
-            id_parent_old=cat_dict[cat][1]
-            )
-        
+#     for cat in cat_dict:
+#         print(cat, '/', cat_dict[cat][0], '/', cat_dict[cat][1])
+#         Category.objects.create(
+#             name=cat_dict[cat][0], 
+#             id_old=cat, 
+#             id_parent_old=cat_dict[cat][1]
+#             )
 
-    data = Category.objects.all()
+#     data = Category.objects.all()
 
-    return render(request, "object/index.html", {'data': data})
+#     return render(request, "object/category_load.html", {'data': data})
     
 
 '''Конец блока для загрузки БД'''

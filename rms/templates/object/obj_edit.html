@@ -85,7 +85,7 @@
                         </label>  
                         <input type="file" name="photos" multiple="multiple" accept="image/*" id="id_photos">
                     </div>
-<!-- 0 -->
+
                     <div class="container-form_button">
                         <button class="button_send"  type="submit">Сохранить</button>
                     </div>
@@ -106,6 +106,7 @@
               <form action="{%url 'storage_create'%}" method="post">
                 {% csrf_token %}
                 <input class="modal_input" id="id_name" type="text" name="name" placeholder="Название">
+                <input type="hidden" name="pk_obj" value="{{pk_obj}}" />
                 <button class="modal-category_button2">Готово</button>
               </form>
               <button class="modal-category_button1">Отмена</button>

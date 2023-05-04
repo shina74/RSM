@@ -47,6 +47,10 @@ class ObjForm(forms.Form):
         )
     
 
+class StorageForm(forms.Form):
+    name = forms.CharField(label=u'Название')
+
+
 class ObjUpdateForm(forms.Form):
     name = forms.CharField(label=u'Название')
     description = forms.CharField(label=u'Описание')

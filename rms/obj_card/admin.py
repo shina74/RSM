@@ -5,6 +5,8 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 
 from .models import Object, Picture, Category, Storage
 
+class CategoryAdmin(DjangoMpttAdmin):
+    pass
 
 class PictureInline(admin.StackedInline):
     model = Picture
@@ -15,4 +17,4 @@ class ObjectAdmin(admin.ModelAdmin):
 admin.site.register(Object, ObjectAdmin)
 admin.site.register(Picture)
 admin.site.register(Storage)
-admin.site.register(Category, DjangoMpttAdmin)
+admin.site.register(Category, CategoryAdmin)

@@ -17,7 +17,12 @@ class Storage(models.Model):
 
 
 class Category(MPTTModel):
-    name = models.CharField(max_length=150, unique=False)
+    '''
+    В результате значения name должны быть уникальными. 
+    Здесь установлено unique=False чтобы во время загрузки категорий 
+    не возникало ошибок связанных с не уникальностью name.
+    '''
+    name = models.CharField(max_length=150, unique=False) 
     parent = TreeForeignKey(
         'self', 
         on_delete=models.CASCADE, 

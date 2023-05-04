@@ -30,7 +30,7 @@
                   {% csrf_token %}
                   {{ form.name_of_field.errors }}
                     <div class="input-control input-control_wrp">
-                        <input id="id_email" class="input_style" type="email" name="login" autocomplete="email" required>
+                        <input id="id_email" class="input_style" type="email" name="login" name="login" autocomplete="email" required>
                         <span class="floating-label">E-mail</span>
                         <div class="error" id="error_login">{{ form.email.errors }}</div>
                     </div>
@@ -38,7 +38,7 @@
                         <input id="id_password" class="input_style" type="password" name="password" required>
                         <span class="floating-label">Пароль</span>
                         <div class="error" id="error_password">
-                          {{ form.password.errors }}
+                        {{ form.password.errors }}
                         </div>
                         {% for error in form.non_field_errors %}
                           <div class="error" id="error_password">{{error}}</div>

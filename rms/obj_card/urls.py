@@ -17,7 +17,6 @@ urlpatterns = [
     path('obj/<int:pk>/delete', views.ObjDeleteView.as_view(), name='obj_delete'),
     path('obj_list/', views.ObjListView.as_view(), name='obj_list'),
     path('add_pic/<int:pk>', views.add_pic, name='add_pic'),
-    # path('obj/<int:pk>/edit', views.ObjUpdateView.as_view(), name='obj_edit'),    
     path('obj/<int:pk>/edit', views.obj_update, name='obj_edit'),    
     path('photo/<int:pk>/delete', views.pic_del, name='photo_delete'),
     path('search/', views.SearchObject.as_view(), name='search'),
@@ -26,7 +25,8 @@ urlpatterns = [
     path('storage/<int:pk>/', views.StorageDetail.as_view(), name='storage_detail'),
     path('storage/<int:pk>/delete', views.StorageDelete.as_view(), name='storage_delete'),
     path('storage/<int:pk>/edit', views.StorageUpdate.as_view(), name='storage_edit'),
-    path('storage/create', views.StorageCreate.as_view(), name='storage_create'),
+    # path('storage/create', views.StorageCreate.as_view(), name='storage_create'),
+    path('storage/create', views.storage_add, name='storage_create'),
 
     # Адреса для загрузки каталога
     # path('load_cat/', views.load_cat),
