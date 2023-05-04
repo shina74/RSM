@@ -281,21 +281,6 @@ class StorageUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('storage_list')
 
 
-class StorageCreate(LoginRequiredMixin, CreateView):
-    '''Добавление места хранения'''
-    model = Storage
-    template_name = 'object/storage_create.html'
-    fields = ['name']
-    success_url = reverse_lazy('obj_list')
-
-    def form_valid(self, form):
-        print(self)
-        print(self.request.POST)
-
-        storage = form.save(commit=False)
-        storage.user = self.request.user
-        return super().form_valid(form)
-
 @login_required
 def storage_add(request):
     '''Добавить место хранения'''
@@ -304,12 +289,13 @@ def storage_add(request):
     elif request.method == 'POST':
         form = StorageForm(request.POST)
         if form.is_valid():
-            print('Form true')
+            print(request.POST)
             Storage.objects.create(
                 name=form.cleaned_data['name'],
                 user=request.user,
                 )
-            if request.POST.get('obj_edit'):
+            if request.POST.get('pk_obj'):
+                print('yes')
                 return redirect('obj_edit', pk=int(request.POST['pk_obj']))
             else:
                 return redirect('obj_add')
