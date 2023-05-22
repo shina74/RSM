@@ -6,7 +6,8 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 from .models import Object, Picture, Category, Storage
 
 class CategoryAdmin(DjangoMpttAdmin):
-    pass
+    ordering = ('name',)
+    search_fields = ("name__icontains", )
 
 class PictureInline(admin.StackedInline):
     model = Picture

@@ -315,7 +315,9 @@ def load_cat(request):
     '''
     print(os.getcwd ())
     loads = ''
-    with open('./category-dom.json', 'r', encoding='utf-8') as f:
+    with open('./category-hobbi.json', 'r', encoding='utf-8') as f:
+    # with open('/home/RMS2022/RSM/rms/rms/category-dom.json', 'r', encoding='utf-8') as f:
+
         loads = f.read()
     cat_dict = json.loads(loads)   # получаем словарь {id_old: [<название категории>, id_parent_old]}
 
@@ -332,6 +334,25 @@ def load_cat(request):
     return render(request, "object/category_load.html", {'data': data})
 
 
+def remove_duplicates(request):   # удаляем дубликаты
+    list_cat = []
+    categoties = Category.objects.all()
+    for cat in categoties:
+        current = Category.objects.filter(name = cat.name)
+        if current.count() > 1:
+            list_cat.append(current[0])
+            print(current.count())
+            i = 0
+            for cat_edit in current:
+                print(i)
+                cat_edit.name += str(i)
+                cat_edit.save()
+                print('Изменено:', cat_edit.name)
+                i += 1
+    print(len(list_cat))
+    return render(request, "object/category_load.html", {'data': list_cat})
+
+
 def set_parent(request):   # заполняем parent
     categoties = Category.objects.all()
     for cat in categoties:
@@ -343,6 +364,7 @@ def set_parent(request):   # заполняем parent
             print(cat.id, cat.name, cat.id_old, cat.id_parent_old, ':', cat.parent)
         except:
             print('Нет объекта с id_old', cat.id_parent_old, (cat.name))
+            # cat.delete()
     data = Category.objects.all()
     print(data.count())
     return render(request, "object/category_parent.html", {'data': data})

@@ -29,8 +29,9 @@ urlpatterns = [
     path('storage/create', views.storage_add, name='storage_create'),
 
     # Адреса для загрузки каталога
-    # path('load_cat/', views.load_cat),
-    # path('set_parent/', views.set_parent),
+    path('load_cat/', views.load_cat),
+    path('remove_duplicates/', views.remove_duplicates),
+    path('set_parent/', views.set_parent),
 
     ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns = format_suffix_patterns(urlpatterns)
